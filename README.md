@@ -49,3 +49,25 @@ Add script in `package.json` fix prettier styles:
   "prettier:write": "prettier --write ./**/*.{ts,js} ./*.{json,md,yml} -l",
 }
 ```
+
+### Commit check
+
+This project is [Commitizen](https://www.npmjs.com/package/commitizen?activeTab=readme) friendly. So
+you can easy create commits in a step by step guide by run:
+
+```bash
+yarn cz
+```
+
+If you are mannually create commit message it will be linted with `commitlint` to lint commit
+messages acording with [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+
+- `husky` & `lint-stage` to fix & lint staged files before commit.
+- `commitlint` to lint commit message according
+  [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+
+Install deps:
+
+```bash
+yarn add -D cz-git commitizen @commitlint/cli @commitlint/config-conventional @commitlint/format
+```
