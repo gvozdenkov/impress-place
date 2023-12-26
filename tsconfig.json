@@ -16,7 +16,7 @@
 
     "allowJs": true,
     "checkJs": false,
-    "outDir": "./build",
+    "outDir": "build",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true
