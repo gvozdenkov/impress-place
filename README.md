@@ -71,3 +71,24 @@ Install deps:
 ```bash
 yarn add -D cz-git commitizen @commitlint/cli @commitlint/config-conventional @commitlint/format
 ```
+
+## Local dev with Docker
+
+To start local dev in docker container use `makefile`:
+
+```bash
+make run-dev
+# and
+make stop-dev
+```
+
+This will build docker image & run container with volume connected to `./src` on
+`http:localhost:4000`
+
+## Local dev without Docker
+
+I use `tsx` to run `.ts` file with ESM modules support
+
+```bash
+yarn dev
+```
