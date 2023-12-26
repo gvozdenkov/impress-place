@@ -83,7 +83,7 @@ make stop-dev
 ```
 
 This will build docker image & run container with volume connected to `./src` on
-`http:localhost:4000`
+`http:localhost:3000`
 
 ## Local dev without Docker
 
