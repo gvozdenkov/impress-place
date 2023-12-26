@@ -2,7 +2,7 @@ import express from 'express';
 
 var app = express();
 
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send('Home Route');
