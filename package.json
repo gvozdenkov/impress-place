@@ -6,8 +6,8 @@
   "main": "build/app.js",
   "scripts": {
     "dev": "tsx watch src/app.ts",
-    "build": "tsc",
-    "start": "tsx src/app.ts",
+    "build": "rimraf build && tsc",
+    "start": "node build/app.js", 
     "prettier:write": "prettier --write ./**/*.{ts,js} ./*.{json,md,yml} -l",
     "lint": "eslint src/**/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -36,6 +36,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "prettier": "2.8.7",
+    "rimraf": "^5.0.5",
     "tsx": "^4.7.0",
     "typescript": "5.3"
   },
