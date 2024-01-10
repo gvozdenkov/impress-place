@@ -1,14 +1,15 @@
-import express from 'express';
+import express, { Application } from 'express';
+import { router } from '#api/v1';
 
-var app = express();
+var app: Application = express();
 
-var port = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Home Route');
-});
+app.use(express.json());
 
-app.listen(port, () => {
+app.use('/api/v1', router);
+
+app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Server running on port ${port}, http://localhost:${port}`);
+  console.log(`Server running on port ${PORT}, http://localhost:${PORT}`);
 });
