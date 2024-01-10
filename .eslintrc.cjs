@@ -40,6 +40,8 @@ module.exports = {
     semi: "error",
     "no-var": 0,
     "@typescript-eslint/no-unused-vars": ["error"],
+    "import/no-mutable-exports": 0,
+    "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

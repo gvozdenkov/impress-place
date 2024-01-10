@@ -92,7 +92,6 @@ common/autoinstallers/*/.npmrc
 .npmrc/
 
 # Others
-docs/
 deploy/
 GRAPH.md
 pnpm-lock.yaml
