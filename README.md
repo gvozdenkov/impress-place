@@ -92,3 +92,39 @@ I use `tsx` to run `.ts` file with ESM modules support
 ```bash
 yarn dev
 ```
+
+## API Documentation
+
+I use the Contract First approach when developing APIs based on OpenApi v3.1
+
+1. Created a contract document describing the API in the `/docs/openapi.yaml` folder.
+2. I use the `swagger-i18n-extension` package to generate localized copies of the docs.
+
+```bash
+ yarn swagger-i18n-extension translate-all ./docs/openapi.yaml
+```
+
+This happens in the docker file after installing the dependencies and copying everything needed into
+the docker image. 3. I use `swagger-ui-express` so that localized documentation is available on
+certain routes. For example for `en`: `/api/v1/docs/en`
+
+```ts
+// app.ts
+
+// add router for app & docs
+app.use('/api/v1', router);
+
+// router.ts
+
+router.use('/docs', docRouter);
+
+// docRouter.ts
+
+// download .yaml specs
+var openApiSpecRu = YAML.load(fs.readFileSync('docs/openapi.rus.yaml', 'utf-8'));
+var openApiSpecEn = YAML.load(fs.readFileSync('docs/openapi.eng.yaml', 'utf-8'));
+
+// server localized swagger docs on different routes
+docRouter.use('/en', swaggerUi.serveFiles(openApiSpecEn, {}), swaggerUi.setup(openApiSpecEn));
+docRouter.use('/ru', swaggerUi.serveFiles(openApiSpecRu, {}), swaggerUi.setup(openApiSpecRu));
+```
