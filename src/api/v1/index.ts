@@ -1,1 +1,1 @@
-export { router } from './router';
+export { router, BASE_PATH } from './router';
