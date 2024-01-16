@@ -1,8 +1,17 @@
-version: '3'
+version: '3.9'
 
 services:
-  server:
+  mongodb:
+    container_name: mesto-mongo-db
+    image: mongo:7.0.5
+    restart: always
+    volumes:
+      - mongodb:/data/db
+
+  app:
     container_name: mesto-express-server
+    depends_on:
+      - mongodb
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -10,3 +19,11 @@ services:
       - ./src:/app/src
     ports:
       - 3000:3000
+    environment:
+      PORT: 3000
+      # url to mongo in container (not localhost)
+      MONGODB_URL: mongodb://mesto-mongo-db:27017
+      DB_NAME: mesto-db
+
+volumes:
+  mongodb:
