@@ -1,4 +1,5 @@
 *
+# ignore all except below
 !src/
 !docs/
 !tsconfig.json
