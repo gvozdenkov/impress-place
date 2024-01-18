@@ -5,6 +5,7 @@ services:
     container_name: mesto-mongo-db
     image: mongo:7.0.5
     restart: always
+    command: mongod --quiet --logpath /var/log/mongodb/mongo.log
     volumes:
       - mongodb:/data/db
 
@@ -20,10 +21,12 @@ services:
     ports:
       - 3000:3000
     environment:
-      PORT: 3000
-      # url to mongo in container (not localhost)
-      MONGODB_URL: mongodb://mesto-mongo-db:27017
-      DB_NAME: mesto-db
+      # map env vars from .env file
+      - NODE_ENV=${NODE_ENV}
+      - MONGODB_URI=${MONGODB_URI}
+      - PORT=${PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_NAME_TEST=${DB_NAME_TEST}
 
 volumes:
   mongodb:
