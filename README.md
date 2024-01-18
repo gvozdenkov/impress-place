@@ -78,12 +78,17 @@ To start local dev in docker container use `makefile`:
 
 ```bash
 make run-dev
+# without -d detached option to see logs in terminal
+make run-dev-d
 # and
 make stop-dev
 ```
 
-This will build docker image & run container with volume connected to `./src` on
-`http:localhost:3000`
+This will build docker images for `mongodb` and `express` app & run containers with volumes. Local
+service started on `http:localhost:3000/api/v1`
+
+For testing replace `NODE_ENV` in `.env` file to `testing`. This will connect express app to testing
+db. So `mocha` tests will drop collections befor every run.
 
 ## Local dev without Docker
 
