@@ -213,16 +213,14 @@ paths:
                   type: string
                   description: User name
                   minLength: 2
-                  maxLength: 40
+                  maxLength: 30
                   format: regex
-                  pattern: '[a-zA-Zа-яА-ЯёЁ\s\-]+'
+                  pattern: '^[a-zA-Zа-яА-ЯёЁ\s-]+$'
                 'about':
                   type: string
                   description: Short text about user
                   minLength: 2
                   maxLength: 200
-                  format: regex
-                  pattern: '[a-zA-Zа-яА-ЯёЁ\s\-]+'
                 'avatar':
                   type: string
                   description: Valid URL to the avatar image
@@ -472,21 +470,21 @@ components:
         name:
           type: string
           minLength: 2
-          maxLength: 40
+          maxLength: 30
           format: regex
-          pattern: '[a-zA-Zа-яА-ЯёЁ\s\-]+'
+          pattern: '^[a-zA-Zа-яА-ЯёЁ\s-]+$'
           examples: ['Brendan Eich']
         about:
           type: string
           description: short text about the user, e.g profession
           minLength: 2
           maxLength: 200
-          format: regex
-          pattern: '[a-zA-Zа-яА-ЯёЁ\s\-]+'
           examples: ['JavaScript Creator']
         avatar:
           type: string
           description: Valid URL image link
+          format: regex
+          pattern: '^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+[^\s]*$/i'
           examples: ['https://techcrunch.com/wp-content/uploads/2011/03/eich.jpg']
 
     Card:
@@ -501,10 +499,12 @@ components:
           minLength: 2
           maxLength: 30
           format: regex
-          pattern: '[a-zA-Zа-яА-ЯёЁ\s\-]+'
+          pattern: '^[a-zA-Zа-яА-ЯёЁ\s-]+$'
           examples: [Mountain Lake]
         link:
           type: string
+          format: regex
+          pattern: '^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+[^\s]*$/i'
           description: Valid URL image link
         owner:
           $ref: '#/components/schemas/User'
