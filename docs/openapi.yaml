@@ -139,7 +139,8 @@ paths:
 
       responses:
         '200':
-          $ref: '#/components/responses/CardArray'
+          description: OK
+          $ref: '#/components/responses/Card'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -164,6 +165,7 @@ paths:
             type: string
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/Card'
         '400':
           description: Incorrect data for liking was sent
@@ -187,6 +189,7 @@ paths:
             type: string
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/Card'
         '400':
           description: Incorrect data for unliking was sent
@@ -230,6 +233,7 @@ paths:
 
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/User'
         '400':
           description: Incorrect data was passed when creating a user
@@ -242,6 +246,7 @@ paths:
       summary: Get a list of all users
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/UserArray'
         '404':
           $ref: '#/components/responses/NotFound'
@@ -258,6 +263,7 @@ paths:
         - bearerAuth: []
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/User'
         '404':
           $ref: '#/components/responses/NotFound'
@@ -291,6 +297,7 @@ paths:
                   examples: [JavaScript Creator]
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/User'
         '400':
           description: Incorrect data was transmitted when updating the profile
@@ -325,6 +332,7 @@ paths:
                   examples: [https://techcrunch.com/wp-content/uploads/2011/03/eich.jpg]
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/User'
         '400':
           description: Incorrect data was transmitted when updating the avatar
@@ -352,6 +360,7 @@ paths:
             type: string
       responses:
         '200':
+          description: OK
           $ref: '#/components/responses/User'
         '404':
           description: The user for the specified {userId} was not found
@@ -368,14 +377,14 @@ components:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                examples: [false]
+              status:
+                type: string
+                examples: [error]
               message:
                 type: string
                 examples: [Internal server error]
             required:
-              - success
+              - status
               - message
 
     NotFound:
@@ -385,14 +394,14 @@ components:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                examples: [false]
+              status:
+                type: string
+                examples: [fail]
               message:
                 type: string
                 examples: [The specified resource was not found]
             required:
-              - success
+              - status
               - message
 
     Unauthorized:
@@ -402,14 +411,14 @@ components:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                examples: [false]
+              status:
+                type: string
+                examples: [fail]
               message:
                 type: string
                 examples: [You must be authorized]
             required:
-              - success
+              - status
               - message
 
     BadRequest:
@@ -419,14 +428,14 @@ components:
           schema:
             type: object
             properties:
-              success:
-                type: boolean
-                examples: [false]
+              status:
+                type: string
+                examples: [fail]
               message:
                 type: string
                 examples: [Something wrong with the request]
             required:
-              - success
+              - status
               - message
 
     Card:
@@ -434,31 +443,55 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Card'
+            type: object
+            properties:
+              status:
+                type: string
+                examples: [success]
+              data:
+                $ref: '#/components/schemas/Card'
 
     CardArray:
-      description: Array of card objects
+      description: List of card objects
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/Card'
+            type: object
+            properties:
+              status:
+                type: string
+                examples: [success]
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
 
     UserArray:
       description: List of user objects
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
+            type: object
+            properties:
+              status:
+                type: string
+                examples: [success]
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
     User:
-      description: User object
+      description: User data
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/User'
+            type: object
+            properties:
+              status:
+                type: string
+                examples: [success]
+              data:
+                $ref: '#/components/schemas/User'
 
   schemas:
     User:
@@ -503,9 +536,15 @@ components:
           examples: [Mountain Lake]
         link:
           type: string
+          description: Valid URL image link
           format: regex
           pattern: '^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+[^\s]*$/i'
-          description: Valid URL image link
+          examples:
+            [
+              https://images.unsplash.com/photo-1668877334122-b60dd15bc1b7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80,
+              https://images.unsplash.com/photo-1673946723153-4994870b64e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80,
+              https://images.unsplash.com/photo-1548777123-b54e9310e1bf?q=80&w=2319&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D,
+            ]
         owner:
           $ref: '#/components/schemas/User'
         likes:
