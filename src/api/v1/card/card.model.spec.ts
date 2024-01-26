@@ -2,6 +2,7 @@ import { HydratedDocument } from 'mongoose';
 import { assert } from 'chai';
 import { CARD, Card, CardSchema } from './card.model';
 import { CARD_FIELD_TEST } from '../test-config';
+import { message } from '../messages';
 
 describe('card model schema', () => {
   var card: HydratedDocument<CardSchema>;
@@ -21,14 +22,14 @@ describe('card model schema', () => {
 
       var error = card.validateSync();
 
-      assert.equal(error?.errors.name.message, `Must be at least ${CARD.nameCardMinLength}`);
+      assert.equal(error?.errors.name.message, message.minLength(CARD.nameCardMinLength));
     });
     it('have correct <max> validation errors message', () => {
       card.name = CARD_FIELD_TEST.name.tooLong;
 
       var error = card.validateSync();
 
-      assert.equal(error?.errors.name.message, `Should be maximum ${CARD.nameCardMaxLength}`);
+      assert.equal(error?.errors.name.message, message.maxLength(CARD.nameCardMaxLength));
     });
   });
 
@@ -38,10 +39,7 @@ describe('card model schema', () => {
 
       var error = card.validateSync();
 
-      assert.equal(
-        error?.errors.link.message,
-        `"${CARD_FIELD_TEST.link.invalidLink}" is not valid url`,
-      );
+      assert.equal(error?.errors.link.message, message.invalidUrl());
     });
   });
 });
