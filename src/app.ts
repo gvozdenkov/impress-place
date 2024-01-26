@@ -1,9 +1,12 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import { BASE_PATH, connectDb, router } from '#api/v1';
+import { promiseMiddleware } from '#api/v1/middlewares';
 
 var app: Application = express();
 
+// @ts-ignore
+app.use(promiseMiddleware());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
