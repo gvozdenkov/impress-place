@@ -3,3 +3,4 @@ export { promiseMiddleware } from './promise';
 export { handleResponse } from './handle-response';
 export { handleResponseError } from './handle-response-error';
 export { errorHandler } from './error-handler';
+export { auth } from './auth';

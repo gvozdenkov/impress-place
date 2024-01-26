@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import { BASE_PATH, connectDb, router } from '#api/v1';
-import { errorHandler, promiseMiddleware } from '#api/v1/middlewares';
+import { auth, errorHandler, promiseMiddleware } from '#api/v1/middlewares';
 
 connectDb();
 
@@ -11,6 +11,7 @@ var app: Application = express();
 
 // @ts-ignore
 app.use(promiseMiddleware());
+app.use(auth);
 
 app.use(cors());
 app.use(express.json());
