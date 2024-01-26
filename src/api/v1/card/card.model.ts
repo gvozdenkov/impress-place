@@ -1,5 +1,6 @@
 import { Schema, model, Types } from 'mongoose';
 import { modelValidate } from '../middlewares';
+import { message } from '../messages';
 
 var schemaOptions = {
   versionKey: false,
@@ -23,15 +24,15 @@ var cardSchema = new Schema<CardSchema>(
     name: {
       type: String,
       required: true,
-      minlength: [CARD.nameCardMinLength, `Must be at least ${CARD.nameCardMinLength}`],
-      maxlength: [CARD.nameCardMaxLength, `Should be maximum ${CARD.nameCardMaxLength}`],
+      minlength: [CARD.nameCardMinLength, message.minLength(CARD.nameCardMinLength)],
+      maxlength: [CARD.nameCardMaxLength, message.maxLength(CARD.nameCardMaxLength)],
     },
     link: {
       type: String,
       required: true,
       validate: {
         validator: (v: string) => modelValidate.url(v),
-        message: '"{VALUE}" is not valid url',
+        message: message.invalidUrl(),
       },
     },
     likes: {
