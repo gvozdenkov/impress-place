@@ -21,6 +21,7 @@
     "strict": true,
     "skipLibCheck": true
   },
+  "files": ["express.d.ts"],
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "build"]
 }
