@@ -133,3 +133,36 @@ var openApiSpecEn = YAML.load(fs.readFileSync('docs/openapi.eng.yaml', 'utf-8'))
 docRouter.use('/en', swaggerUi.serveFiles(openApiSpecEn, {}), swaggerUi.setup(openApiSpecEn));
 docRouter.use('/ru', swaggerUi.serveFiles(openApiSpecRu, {}), swaggerUi.setup(openApiSpecRu));
 ```
+
+## Test Driven Development
+
+```bash
+yarn add mocha @types/mocha chai @types/chai tsx
+```
+
+Use Mocha & Chai for testing
+
+Use `tsx` to work with .ts test files. Create `mocharc.json` to config Mocha for TS (spec/test files
+located near the tested files in `src`):
+
+```json
+{
+  "require": ["tsx"],
+  "extensions": ["ts"],
+  "spec": ["src/**/*.spec.*"],
+  "watch-files": ["src"]
+}
+```
+
+Add script to `package.json`:
+
+```diff
+  "scripts": {
++    "test": "mocha 'src/**/*.{spec,test}.ts'",
++    "test:watch": "mocha --watch",
+  },
+```
+
+Run `yarn test` to run mocha tests
+
+Run `yarn test:watch` to run mocha in watch mode to rerun tests on edits
