@@ -1,6 +1,7 @@
 import { NextFunction } from 'express';
 import { MongooseError, Schema, model } from 'mongoose';
 import { modelValidate } from '../middlewares';
+import { message } from '../messages';
 
 var schemaOptions = {
   versionKey: false,
@@ -30,25 +31,25 @@ const userSchema = new Schema<UserSchema>(
     name: {
       type: String,
       default: USER.nameDefault,
-      minlength: [USER.nameMinLength, `Must be at least ${USER.nameMinLength}`],
-      maxlength: [USER.nameMaxLength, `Should be maximum ${USER.nameMaxLength}`],
+      minlength: [USER.nameMinLength, message.minLength(USER.nameMinLength)],
+      maxlength: [USER.nameMaxLength, message.maxLength(USER.nameMaxLength)],
       validate: {
         validator: (v: string) => modelValidate.name(v),
-        message: '"{VALUE}" is not valid name',
+        message: message.invalidName(),
       },
     },
     about: {
       type: String,
       default: 'Web Developer',
-      minlength: [USER.aboutMinLength, `Must be at least ${USER.aboutMinLength}`],
-      maxlength: [USER.aboutMaxLength, `Should be maximum ${USER.aboutMaxLength}`],
+      minlength: [USER.aboutMinLength, message.minLength(USER.aboutMinLength)],
+      maxlength: [USER.aboutMaxLength, message.maxLength(USER.aboutMaxLength)],
     },
     avatar: {
       type: String,
       default: USER.avatarDefault,
       validate: {
         validator: (v: string) => modelValidate.url(v),
-        message: '"{VALUE}" is not valid url',
+        message: message.invalidUrl(),
       },
     },
   },

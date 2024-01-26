@@ -2,6 +2,7 @@ import { HydratedDocument } from 'mongoose';
 import { assert } from 'chai';
 import { USER, User, UserSchema } from './user.model';
 import { USER_FIELD_TEST } from '../test-config';
+import { message } from '../messages';
 
 describe('user medel schema', () => {
   var user: HydratedDocument<UserSchema>;
@@ -23,33 +24,27 @@ describe('user medel schema', () => {
 
       var error = user.validateSync();
 
-      assert.equal(error?.errors.name.message, `Must be at least ${USER.nameMinLength}`);
+      assert.equal(error?.errors.name.message, message.minLength(USER.nameMinLength));
     });
     it('have correct <max> validation errors message', () => {
       user.name = USER_FIELD_TEST.name.tooLong;
 
       var error = user.validateSync();
 
-      assert.equal(error?.errors.name.message, `Should be maximum ${USER.nameMaxLength}`);
+      assert.equal(error?.errors.name.message, message.maxLength(USER.nameMaxLength));
     });
     it('contain only En, Ru, space or dash', () => {
       user.name = USER_FIELD_TEST.name.invalidNameNumber;
 
       var error = user.validateSync();
 
-      assert.equal(
-        error?.errors.name.message,
-        `"${USER_FIELD_TEST.name.invalidNameNumber}" is not valid name`,
-      );
+      assert.equal(error?.errors.name.message, message.invalidName());
 
       user.name = USER_FIELD_TEST.name.invalidNameSpetial;
 
       error = user.validateSync();
 
-      assert.equal(
-        error?.errors.name.message,
-        `"${USER_FIELD_TEST.name.invalidNameSpetial}" is not valid name`,
-      );
+      assert.equal(error?.errors.name.message, message.invalidName());
     });
   });
   describe('about field', () => {
@@ -62,14 +57,14 @@ describe('user medel schema', () => {
 
       var error = user.validateSync();
 
-      assert.equal(error?.errors.about.message, `Must be at least ${USER.aboutMinLength}`);
+      assert.equal(error?.errors.about.message, message.minLength(USER.aboutMinLength));
     });
     it('have correct <max> validation', () => {
       user.about = USER_FIELD_TEST.about.tooLong;
 
       var error = user.validateSync();
 
-      assert.equal(error?.errors.about.message, `Should be maximum ${USER.aboutMaxLength}`);
+      assert.equal(error?.errors.about.message, message.maxLength(USER.aboutMaxLength));
     });
   });
   describe('avatar field', () => {
@@ -83,10 +78,7 @@ describe('user medel schema', () => {
 
       var error = user.validateSync();
 
-      assert.equal(
-        error?.errors.avatar.message,
-        `"${USER_FIELD_TEST.avatar.invalidAvatar}" is not valid url`,
-      );
+      assert.equal(error?.errors.avatar.message, message.invalidUrl());
     });
   });
 });
