@@ -1,7 +1,7 @@
-import { NextFunction } from 'express';
 import { MongooseError, Schema, model } from 'mongoose';
 import { modelValidate } from '../middlewares';
 import { message } from '../messages';
+import { nextFromMongoose } from '../helpers';
 
 var schemaOptions = {
   versionKey: false,
@@ -56,28 +56,12 @@ const userSchema = new Schema<UserSchema>(
   schemaOptions,
 );
 
-var mongooseErrorType: Record<string, number> = {
-  CastError: 404,
-  DocumentNotFoundError: 404,
-  ValidationError: 400,
-};
-
-var getErrorCode = (error: MongooseError) => mongooseErrorType[error.name] || 500;
-
-var nextFromMongo = (error: MongooseError, next: NextFunction, customMessage?: string) => {
-  var code = getErrorCode(error);
-  var errorMessage =
-    code === 500 && !customMessage ? message.internalServerError() : customMessage || error.message;
-
-  next({ code, message: errorMessage });
-};
-
 userSchema.post('save', (_error: MongooseError, _doc: any, next: any) =>
-  nextFromMongo(_error, next),
+  nextFromMongoose(_error, next),
 );
 
 userSchema.post('findOne', (_error: MongooseError, _doc: any, next: any) =>
-  nextFromMongo(_error, next, message.notFound('user')),
+  nextFromMongoose(_error, next, message.notFound('user')),
 );
 
 export var User = model<UserSchema>('User', userSchema);
