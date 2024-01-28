@@ -1,0 +1,1 @@
+export { nextFromMongoose } from './mongoose';
