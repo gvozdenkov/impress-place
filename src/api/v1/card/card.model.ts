@@ -1,6 +1,7 @@
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model, Types, MongooseError } from 'mongoose';
 import { modelValidate } from '../middlewares';
 import { message } from '../messages';
+import { nextFromMongoose } from '../helpers';
 
 var schemaOptions = {
   versionKey: false,
@@ -46,6 +47,14 @@ var cardSchema = new Schema<CardSchema>(
     },
   },
   schemaOptions,
+);
+
+cardSchema.post('findOne', (_error: MongooseError, _doc: any, next: any) =>
+  nextFromMongoose(_error, next, message.notFound('card')),
+);
+
+cardSchema.post('findOneAndDelete', (_error: MongooseError, _doc: any, next: any) =>
+  nextFromMongoose(_error, next, message.findOneAndDeleteError('card')),
 );
 
 export var Card = model<CardSchema>('Card', cardSchema);
