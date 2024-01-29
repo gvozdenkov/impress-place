@@ -11,6 +11,18 @@ cardRouter.post('/', (req: Request, res: ModifiedResponse) => {
   res.promise(cardService.create({ name, link, owner }));
 });
 
+cardRouter.put('/:cardId/likes', (req: Request, res: ModifiedResponse) => {
+  // eslint-disable-next-line no-underscore-dangle
+  var userId = req.user._id;
+  res.promise(cardService.setLike(req.params.cardId, userId));
+});
+
+cardRouter.delete('/:cardId/likes', (req: Request, res: ModifiedResponse) => {
+  // eslint-disable-next-line no-underscore-dangle
+  var userId = req.user._id;
+  res.promise(cardService.removeLike(req.params.cardId, userId));
+});
+
 cardRouter.delete('/:cardId', (req, res: ModifiedResponse) =>
   res.promise(cardService.deleteById(req.params.cardId)),
 );
