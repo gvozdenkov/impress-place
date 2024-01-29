@@ -64,4 +64,8 @@ userSchema.post('findOne', (_error: MongooseError, _doc: any, next: any) =>
   nextFromMongoose(_error, next, message.notFound('user')),
 );
 
+userSchema.post('findOneAndUpdate', (_error: MongooseError, _doc: any, next: any) =>
+  nextFromMongoose(_error, next, _error.message),
+);
+
 export var User = model<UserSchema>('User', userSchema);
