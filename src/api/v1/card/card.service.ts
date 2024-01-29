@@ -16,9 +16,29 @@ var create = async ({ name, link, owner }: CreateUser) => {
   return card.save();
 };
 
+var setLike = async (id: string, userId: string) =>
+  Card.findByIdAndUpdate(
+    id,
+    { $addToSet: { likes: userId } },
+    {
+      returnDocument: 'after',
+    },
+  ).orFail();
+
+var removeLike = async (id: string, userId: string) =>
+  Card.findByIdAndUpdate(
+    id,
+    { $pull: { likes: userId } },
+    {
+      returnDocument: 'after',
+    },
+  ).orFail();
+
 export var cardService = {
   create,
   getAll,
   getById,
   deleteById,
+  setLike,
+  removeLike,
 };
