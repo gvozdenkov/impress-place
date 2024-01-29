@@ -57,4 +57,8 @@ cardSchema.post('findOneAndDelete', (_error: MongooseError, _doc: any, next: any
   nextFromMongoose(_error, next, message.findOneAndDeleteError('card')),
 );
 
+cardSchema.post('findOneAndUpdate', (_error: MongooseError, _doc: any, next: any) =>
+  nextFromMongoose(_error, next, message.findOneAndUpdateError('card')),
+);
+
 export var Card = model<CardSchema>('Card', cardSchema);
