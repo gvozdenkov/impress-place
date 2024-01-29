@@ -5,6 +5,7 @@ var invalidName = () => 'You can only use Latin and Russian letters, hyphens and
 var internalServerError = () => 'Internal server error';
 var notFound = (v: string) => `${v} not found`;
 var findOneAndDeleteError = (v: string) => `${v} deletion error`;
+var findOneAndUpdateError = (v: string) => `Can't update ${v}`;
 var custom = (v: string) => v;
 
 export var message = {
@@ -15,5 +16,6 @@ export var message = {
   internalServerError,
   notFound,
   findOneAndDeleteError,
+  findOneAndUpdateError,
   custom,
 };
