@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { BASE_PATH, connectDb, router } from '#api/v1';
-import { auth, errorHandler, promiseMiddleware } from '#api/v1/middlewares';
+import { BASE_PATH, connectDb, router } from '#v1';
+import { auth, errorHandler, promiseMiddleware } from '#v1/middlewares';
 
 connectDb();
 
