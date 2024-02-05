@@ -1,11 +1,12 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { BASE_PATH, connectDb, router } from '#v1';
+import { connectDb, router } from '#v1';
 import { auth, errorHandler, promiseMiddleware } from '#v1/middlewares';
 
 connectDb();
 
 var PORT = process.env.PORT || 3000;
+var BASE_PATH = process.env.BASE_PATH || '/api/v1';
 
 var app: Application = express();
 
