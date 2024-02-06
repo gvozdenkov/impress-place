@@ -23,3 +23,10 @@ export type Error = {
   status: ResStatus;
   message: string;
 };
+
+export type ServiceReturn = {
+  statusCode?: number;
+  data: any;
+};
+
+export type ServiceReturnPromise = Promise<ServiceReturn>;
