@@ -7,7 +7,7 @@ var create = (req: Request, res: ModifiedResponse) => {
   var { body, user } = req;
   var { name, link } = body;
   var owner = user._id;
-  res.promise(() => cardService.create({ name, link, owner }));
+  res.promise(cardService.create({ name, link, owner }));
 };
 
 var getAll = (req: Request, res: ModifiedResponse) => res.promise(cardService.getAll());
