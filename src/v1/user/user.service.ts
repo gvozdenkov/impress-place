@@ -1,4 +1,5 @@
 import { QueryOptions } from 'mongoose';
+import { ServiceReturnPromise } from '#v1/types';
 import { User, UserSchema } from './user.model';
 
 var updateOptions: QueryOptions<UserSchema> = {
@@ -6,9 +7,13 @@ var updateOptions: QueryOptions<UserSchema> = {
   runValidators: true,
 };
 
-var create = async ({ name, about, avatar }: UserSchema) => {
+var create = async ({ name, about, avatar }: UserSchema): ServiceReturnPromise => {
   var user = new User({ name, about, avatar });
-  return user.save();
+  var savedUser = await user.save();
+  return {
+    statusCode: 201,
+    data: savedUser,
+  };
 };
 
 var getAll = async () => User.find({}).lean();
