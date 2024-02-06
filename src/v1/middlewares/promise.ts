@@ -1,5 +1,5 @@
 import { Request, NextFunction } from 'express';
-import { ErrorWithCode, ModifiedResponse } from '../types';
+import { ErrorWithCode, ModifiedResponse, ServiceReturn } from '../types';
 import { handleResponse } from './handle-response';
 import { handleResponseError } from './handle-response-error';
 
@@ -15,7 +15,9 @@ export var promiseMiddleware = () => (req: Request, res: ModifiedResponse, next:
     }
 
     return promiseToResolve
-      .then((data: any) => handleResponse(res, data))
+      .then(({ data, statusCode }: ServiceReturn) => {
+        handleResponse(res, data, statusCode);
+      })
       .catch((e: ErrorWithCode) => handleResponseError(res, e.message, e.code));
   };
 
