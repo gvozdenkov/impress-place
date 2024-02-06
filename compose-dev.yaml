@@ -27,6 +27,7 @@ services:
       - PORT=${PORT}
       - DB_NAME=${DB_NAME}
       - DB_NAME_TEST=${DB_NAME_TEST}
+      - TEMP_USER_ID=${TEMP_USER_ID}
 
 volumes:
   mongodb:
