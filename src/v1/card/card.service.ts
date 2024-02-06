@@ -1,4 +1,5 @@
 import { QueryOptions } from 'mongoose';
+import { ServiceReturnPromise } from '#v1/types';
 import { Card, CardSchema } from './card.model';
 
 type CreateUser = {
@@ -11,9 +12,13 @@ var updateOptions: QueryOptions<CardSchema> = {
   returnDocument: 'after',
 };
 
-var create = async ({ name, link, owner }: CreateUser) => {
+var create = async ({ name, link, owner }: CreateUser): ServiceReturnPromise => {
   var card = new Card({ name, link, owner });
-  return card.save();
+  var savedCard = await card.save();
+  return {
+    statusCode: 201,
+    data: savedCard,
+  };
 };
 
 var getAll = async () => Card.find({}).lean().orFail();
