@@ -9,10 +9,18 @@ services:
     volumes:
       - mongodb:/data/db
 
+  mongodb-test:
+    container_name: mesto-mongo-db-test
+    image: mongo:7.0.5
+    restart: always
+    ports:
+      - 27017:27017
+
   app:
     container_name: mesto-express-server
     depends_on:
       - mongodb
+      - mongodb-test
     build:
       context: .
       dockerfile: Dockerfile.dev
