@@ -17,3 +17,6 @@ node_modules
 
 # Typescript build
 build
+
+# Exclude localized docs. Store only template openapi.yaml
+openapi.*.yaml
