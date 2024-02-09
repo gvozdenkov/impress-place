@@ -9,9 +9,6 @@ RUN yarn --frozen-lockfile
 
 COPY . .
 
-# Build localized versions of swagger API docs
-RUN yarn swagger-i18n-extension translate-all ./docs/openapi.yaml
-
 EXPOSE 3000
 
 CMD yarn dev

@@ -5,12 +5,13 @@
   "type": "module",
   "main": "build/app.js",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
+    "dev": "yarn swagger:docs && tsx watch src/app.ts",
     "build": "rimraf build && tsc",
     "start": "node build/app.js",
     "prettier:write": "prettier --write ./**/*.{ts,js} ./*.{json,md,yml} -l",
     "lint": "eslint src/**/*.ts",
-    "test": "mocha 'src/**/*.{spec,test}.ts'",
+    "swagger:docs": "yarn swagger-i18n-extension translate-all ./docs/openapi.yaml",
+    "test": "cross-env NODE_ENV=testing mocha 'src/**/*.{spec,test}.ts'",
     "test:watch": "mocha --watch",
     "prepare": "husky install",
     "cz": "cz"
