@@ -13,6 +13,7 @@ services:
     container_name: mesto-mongo-db-test
     image: mongo:7.0.5
     restart: always
+    command: mongod --quiet --logpath /dev/null
     ports:
       - 27017:27017
 
@@ -31,8 +32,8 @@ services:
     environment:
       # map env vars from .env file
       - NODE_ENV=${NODE_ENV}
-      - MONGODB_URI=${MONGODB_URI}
       - PORT=${PORT}
+      - MONGODB_URI=${MONGODB_URI}
       - DB_NAME=${DB_NAME}
       - MONGODB_URI_TEST=${MONGODB_URI_TEST}
       - DB_NAME_TEST=${DB_NAME_TEST}
