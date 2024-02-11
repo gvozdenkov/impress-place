@@ -1,11 +1,12 @@
 import http from 'http';
-import { BASE_PATH, app } from '#app';
+import { app } from '#app';
+import { config } from '#v1/config';
 
-var PORT = process.env.PORT || 3000;
+var { port: PORT, basePath: BASE_PATH } = config;
 
 var testServer = http.createServer(app);
 
 testServer.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Test server running on port ${PORT}, http://localhost:${PORT}${BASE_PATH}`);
+  console.log(`Server running on port ${PORT}, http://localhost:${PORT}${BASE_PATH}`);
 });

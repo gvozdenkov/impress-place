@@ -1,20 +1,26 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import { config } from './config';
 
-dotenv.config();
-
-export var dbName =
-  process.env.NODE_ENV === 'testing' ? process.env.DB_NAME_TEST : process.env.DB_NAME;
+var { uri, dbName } = config.mongoose;
+var { env } = config;
 
 var options = {
   dbName,
 };
 
 export var connectDb = () => {
-  mongoose
-    .connect(process.env.MONGODB_URI!, options)
+  if (env !== 'development') {
     // eslint-disable-next-line no-console
-    .then(() => console.log(`Mongodb connected to ${dbName} (NODE_ENV=${process.env.NODE_ENV})...`))
+    console.log(`
+    \n===> start connection to mongodb...
+    \nNODE_ENV=${env}
+    \ndbURI=${uri}
+    \ndbName=${dbName}`);
+  }
+  mongoose
+    .connect(uri, options)
+    // eslint-disable-next-line no-console
+    .then(() => console.log(`Mongodb connected to ${dbName} (NODE_ENV=${env})...`))
     // eslint-disable-next-line no-console
     .catch((e) => console.log('Mongodb connection error', e.message));
 };
