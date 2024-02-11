@@ -34,8 +34,8 @@ services:
       - MONGODB_URI=${MONGODB_URI}
       - PORT=${PORT}
       - DB_NAME=${DB_NAME}
+      - MONGODB_URI_TEST=${MONGODB_URI_TEST}
       - DB_NAME_TEST=${DB_NAME_TEST}
-      - TEMP_USER_ID=${TEMP_USER_ID}
 
 volumes:
   mongodb:
