@@ -1,6 +1,6 @@
 import http from 'http';
 import { app } from '#app';
-import { config } from '#v1/config';
+import { config } from '#config';
 
 var { port: PORT, basePath: BASE_PATH } = config;
 
