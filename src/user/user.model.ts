@@ -12,6 +12,8 @@ export type UserSchema = {
   name?: string;
   about?: string;
   avatar?: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export var USER = {
@@ -69,3 +71,5 @@ userSchema.post('findOneAndUpdate', (_error: MongooseError, _doc: any, next: any
 );
 
 export var User = model<UserSchema>('User', userSchema);
+
+export type UserDocument = InstanceType<typeof User>;

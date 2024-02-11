@@ -1,6 +1,6 @@
 import { QueryOptions } from 'mongoose';
-import { ServiceReturnPromise } from '#v1/types';
-import { serviceReturn } from '#v1/helpers';
+import { ServiceReturnPromise } from '#types';
+import { serviceReturn } from '#helpers';
 import { Card, CardSchema } from './card.model';
 
 type CreateUser = {

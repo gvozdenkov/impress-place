@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { docRouter } from './docs';
-import { cardRouter } from './card';
-import { userRouter } from './user';
+import { docRouter } from '#docs';
+import { cardRouter } from '#card';
+import { userRouter } from '#user';
 
 var router = Router();
 

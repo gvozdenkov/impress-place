@@ -1,8 +1,9 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { connectDb, router } from '#v1';
-import { auth, errorHandler, promiseMiddleware } from '#v1/middlewares';
-import { config } from '#v1/config';
+import { router } from '#v1';
+import { auth, errorHandler, promiseMiddleware } from '#middlewares';
+import { config } from '#config';
+import { connectDb } from '#mongo-connect';
 
 connectDb();
 

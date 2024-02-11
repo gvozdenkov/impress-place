@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Request } from 'express';
-import { ModifiedResponse } from '#v1/types';
+import { ModifiedResponse } from '#types';
 import { cardService } from './card.service';
 
 var create = (req: Request, res: ModifiedResponse) => {

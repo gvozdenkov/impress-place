@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 var dirname = path.dirname(fileURLToPath(import.meta.url));
 
-dotenv.config({ path: path.join(dirname, '../../../.env') });
+dotenv.config({ path: path.join(dirname, '../../.env') });
 
 var envSchema = joi
   .object()
