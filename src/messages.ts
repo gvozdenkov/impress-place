@@ -7,6 +7,12 @@ var notFound = (v: string) => `${v} not found`;
 var findOneAndDeleteError = (v: string) => `${v} deletion error`;
 var findOneAndUpdateError = (v: string) => `Can't update ${v}`;
 var custom = (v: string) => v;
+var validationSchemaPathRequied = (model: string, path: string) =>
+  `${
+    model[0].toUpperCase() + model.slice(1)
+  } validation failed: ${path}: Path \`${path}\` is required.`;
+var validationFailed = (model: string, path: string, message: string) =>
+  `${model[0].toUpperCase() + model.slice(1)} validation failed: ${path}: ${message}`;
 
 export var message = {
   minLength,
@@ -18,4 +24,6 @@ export var message = {
   findOneAndDeleteError,
   findOneAndUpdateError,
   custom,
+  validationSchemaPathRequied,
+  validationFailed,
 };
