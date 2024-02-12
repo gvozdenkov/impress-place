@@ -87,8 +87,8 @@ make stop-dev
 This will build docker images for `mongodb` and `express` app & run containers with volumes. Local
 service started on `http:localhost:3000/api/v1`
 
-For testing replace `NODE_ENV` in `.env` file to `testing`. This will connect express app to testing
-db. So `mocha` tests will drop collections befor every run.
+For testing run `yarn test`. This will set `NODE_ENV` to `test` and run `mocha` integration tests in
+separate test container.
 
 ## Local dev without Docker
 
@@ -105,13 +105,13 @@ I use the Contract First approach when developing APIs based on OpenApi v3.1
 1. Created a contract document describing the API in the `/docs/openapi.yaml` folder.
 2. I use the `swagger-i18n-extension` package to generate localized copies of the docs.
 
-```bash
- yarn swagger-i18n-extension translate-all ./docs/openapi.yaml
+```json
+ "swagger:docs": "yarn swagger-i18n-extension translate-all ./docs/openapi.yaml"
 ```
 
-This happens in the docker file after installing the dependencies and copying everything needed into
-the docker image. 3. I use `swagger-ui-express` so that localized documentation is available on
-certain routes. For example for `en`: `/api/v1/docs/en`
+This script generate localized versions from the `./docs/openapi.yaml`
+
+I use `swagger-ui-express` serve docs on `/docs` route. For example for `en`: `/api/v1/docs/en`
 
 ```ts
 // app.ts
@@ -136,6 +136,12 @@ docRouter.use('/ru', swaggerUi.serveFiles(openApiSpecRu, {}), swaggerUi.setup(op
 
 ## Test Driven Development
 
+I decided to use only integration tests because only the server responses are important to the end
+user. The model and access to the database do not require testing. If something goes wrong at this
+stage, the tests will automatically fail. This makes the tests resistant to refactoring. You can
+replace the database and internal processes, the only important thing is that the server response
+remains the same
+
 ```bash
 yarn add mocha @types/mocha chai @types/chai tsx
 ```
@@ -158,11 +164,12 @@ Add script to `package.json`:
 
 ```diff
   "scripts": {
-+    "test": "mocha 'src/**/*.{spec,test}.ts'",
++    "test": "cross-env NODE_ENV=test mocha 'src/**/*.{spec,test}.ts'",
 +    "test:watch": "mocha --watch",
   },
 ```
 
 Run `yarn test` to run mocha tests
 
-Run `yarn test:watch` to run mocha in watch mode to rerun tests on edits
+Run `yarn test:watch` to run mocha in watch mode to rerun tests on edits (not workin well with ts
+now...)
