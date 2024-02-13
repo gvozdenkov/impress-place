@@ -34,6 +34,7 @@ const userSchema = new Schema<UserSchema>(
   {
     name: {
       type: String,
+      trim: true,
       default: USER.nameDefault,
       minlength: [USER.nameMinLength, message.minLength(USER.nameMinLength)],
       maxlength: [USER.nameMaxLength, message.maxLength(USER.nameMaxLength)],
@@ -44,6 +45,7 @@ const userSchema = new Schema<UserSchema>(
     },
     about: {
       type: String,
+      trim: true,
       default: 'Web Developer',
       minlength: [USER.aboutMinLength, message.minLength(USER.aboutMinLength)],
       maxlength: [USER.aboutMaxLength, message.maxLength(USER.aboutMaxLength)],

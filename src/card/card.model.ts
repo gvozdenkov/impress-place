@@ -25,12 +25,14 @@ var cardSchema = new Schema<CardSchema>(
     name: {
       type: String,
       required: true,
+      trim: true,
       minlength: [CARD.nameCardMinLength, message.minLength(CARD.nameCardMinLength)],
       maxlength: [CARD.nameCardMaxLength, message.maxLength(CARD.nameCardMaxLength)],
     },
     link: {
       type: String,
       required: true,
+      trim: true,
       validate: {
         validator: (v: string) => modelValidate.url(v),
         message: message.invalidUrl(),
