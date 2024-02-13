@@ -12,6 +12,8 @@ export type UserSchema = {
   name?: string;
   about?: string;
   avatar?: string;
+  email: string;
+  password: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -53,6 +55,24 @@ const userSchema = new Schema<UserSchema>(
         validator: (v: string) => modelValidate.url(v),
         message: message.invalidUrl(),
       },
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      validate: {
+        validator: (v: string) => modelValidate.email(v),
+        message: message.invalidEmail(),
+      },
+    },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+      select: false,
+      private: true,
     },
   },
   schemaOptions,
