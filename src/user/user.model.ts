@@ -9,28 +9,32 @@ var schemaOptions = {
 };
 
 export type UserSchema = {
-  name: string;
-  about: string;
-  avatar: string;
+  name?: string;
+  about?: string;
+  avatar?: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
 export var USER = {
+  nameDefault: 'John Dow',
   nameMaxLength: 30,
   nameMinLength: 2,
 
+  aboutDefault: 'Web Developer',
   aboutMaxLength: 200,
   aboutMinLength: 2,
+
+  avatarDefault: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
 } as const;
 
 const userSchema = new Schema<UserSchema>(
   {
     name: {
       type: String,
+      default: USER.nameDefault,
       minlength: [USER.nameMinLength, message.minLength(USER.nameMinLength)],
       maxlength: [USER.nameMaxLength, message.maxLength(USER.nameMaxLength)],
-      required: true,
       validate: {
         validator: (v: string) => modelValidate.name(v),
         message: message.invalidName(),
@@ -38,13 +42,13 @@ const userSchema = new Schema<UserSchema>(
     },
     about: {
       type: String,
-      required: true,
+      default: 'Web Developer',
       minlength: [USER.aboutMinLength, message.minLength(USER.aboutMinLength)],
       maxlength: [USER.aboutMaxLength, message.maxLength(USER.aboutMaxLength)],
     },
     avatar: {
       type: String,
-      required: true,
+      default: USER.avatarDefault,
       validate: {
         validator: (v: string) => modelValidate.url(v),
         message: message.invalidUrl(),
