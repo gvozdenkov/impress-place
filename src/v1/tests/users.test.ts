@@ -69,7 +69,7 @@ describe(basePath, () => {
 
   // POST ========================================
   describe(`POST ${basePath}`, () => {
-    it('Should create user', async () => {
+    it('should create 201 user', async () => {
       var { name, about, avatar } = randomeUser();
 
       await request(app)
@@ -88,18 +88,22 @@ describe(basePath, () => {
           });
         });
     });
-    it('Should throw 400 error with no name', async () => {
+    it('should create 201 user with default name when no name', async () => {
       var { about, avatar } = randomeUser();
 
       await request(app)
         .post(`${basePath}`)
         .send({ about, avatar })
-        .expect(400)
+        .expect(201)
         .expect('Content-type', /json/)
         .then((res) => {
-          assert.deepStrictEqual(res.body, {
-            status: 'fail',
-            message: message.validationSchemaPathRequied('user', 'name'),
+          var { status, data } = res.body;
+
+          assert.equal(status, 'success');
+          assert.include(data, {
+            name: USER.nameDefault,
+            about,
+            avatar,
           });
         });
     });
@@ -161,18 +165,22 @@ describe(basePath, () => {
           });
         });
     });
-    it('Should throw 400 error with no about', async () => {
+    it('should create 201 user with default about when no about', async () => {
       var { name, avatar } = randomeUser();
 
       await request(app)
         .post(`${basePath}`)
         .send({ name, avatar })
-        .expect(400)
+        .expect(201)
         .expect('Content-type', /json/)
         .then((res) => {
-          assert.deepStrictEqual(res.body, {
-            status: 'fail',
-            message: message.validationSchemaPathRequied('user', 'about'),
+          var { status, data } = res.body;
+
+          assert.equal(status, 'success');
+          assert.include(data, {
+            name,
+            about: USER.aboutDefault,
+            avatar,
           });
         });
     });
@@ -218,18 +226,22 @@ describe(basePath, () => {
           });
         });
     });
-    it('Should throw 400 error with no avatar', async () => {
+    it('should create 201 user with default avatar when no about', async () => {
       var { name, about } = randomeUser();
 
       await request(app)
         .post(`${basePath}`)
         .send({ name, about })
-        .expect(400)
+        .expect(201)
         .expect('Content-type', /json/)
         .then((res) => {
-          assert.deepStrictEqual(res.body, {
-            status: 'fail',
-            message: message.validationSchemaPathRequied('user', 'avatar'),
+          var { status, data } = res.body;
+
+          assert.equal(status, 'success');
+          assert.include(data, {
+            name,
+            about,
+            avatar: USER.avatarDefault,
           });
         });
     });
