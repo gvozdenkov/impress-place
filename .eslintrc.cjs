@@ -42,6 +42,8 @@ module.exports = {
     "vars-on-top": 0,
     "@typescript-eslint/no-unused-vars": ["error"],
     "@typescript-eslint/no-shadow": 0,
+    "no-return-await": "off",
+    "@typescript-eslint/return-await": "off",
     "import/no-mutable-exports": 0,
     "import/prefer-default-export": "off",
     "import/extensions": [
