@@ -8,8 +8,8 @@ var updateOptions: QueryOptions<UserSchema> = {
   runValidators: true,
 };
 
-var create = async ({ name, about, avatar }: UserSchema): ServiceReturnPromise => {
-  var user = new User({ name, about, avatar });
+var create = async ({ name, about, avatar, email, password }: UserSchema): ServiceReturnPromise => {
+  var user = new User({ name, about, avatar, email, password });
   var savedUser = await user.save();
   return serviceReturn(savedUser, 201);
 };
