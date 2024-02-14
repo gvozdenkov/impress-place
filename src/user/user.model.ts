@@ -46,7 +46,7 @@ const userSchema = new Schema<UserSchema>(
     about: {
       type: String,
       trim: true,
-      default: 'Web Developer',
+      default: USER.aboutDefault,
       minlength: [USER.aboutMinLength, message.minLength(USER.aboutMinLength)],
       maxlength: [USER.aboutMaxLength, message.maxLength(USER.aboutMaxLength)],
     },
@@ -74,7 +74,6 @@ const userSchema = new Schema<UserSchema>(
       required: true,
       trim: true,
       select: false,
-      private: true,
     },
   },
   schemaOptions,
