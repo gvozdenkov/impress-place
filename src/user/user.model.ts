@@ -1,4 +1,5 @@
 import { MongooseError, Schema, model } from 'mongoose';
+import { hash } from 'bcrypt';
 import { modelValidate } from '../middlewares';
 import { message } from '../messages';
 import { nextFromMongoose } from '../helpers';
@@ -78,6 +79,14 @@ const userSchema = new Schema<UserSchema>(
   },
   schemaOptions,
 );
+
+userSchema.pre('save', async function hashChengedPassword(next) {
+  if (this.isModified('password')) {
+    this.password = await hash(this.password, 10);
+  }
+
+  next();
+});
 
 userSchema.post('save', (_error: MongooseError, _doc: any, next: any) =>
   nextFromMongoose(_error, next),
