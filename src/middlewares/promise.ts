@@ -16,7 +16,11 @@ export var promiseMiddleware = () => (req: Request, res: ModifiedResponse, next:
 
     return promiseToResolve
       .then(({ data, statusCode }: ServiceReturn) => {
-        handleResponse(res, data, statusCode);
+        if (statusCode && statusCode >= 200 && statusCode < 300) {
+          handleResponse(res, data, statusCode);
+        }
+
+        handleResponseError(res, data, statusCode);
       })
       .catch((e: ErrorWithCode) => handleResponseError(res, e.message, e.code));
   };

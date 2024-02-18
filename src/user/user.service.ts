@@ -1,6 +1,7 @@
 import { QueryOptions } from 'mongoose';
 import { ServiceReturnPromise } from '#types';
 import { serviceReturn } from '#helpers';
+import { message } from '#messages';
 import { User, UserSchema } from './user.model';
 
 var updateOptions: QueryOptions<UserSchema> = {
@@ -9,6 +10,10 @@ var updateOptions: QueryOptions<UserSchema> = {
 };
 
 var create = async ({ name, about, avatar, email, password }: UserSchema): ServiceReturnPromise => {
+  if (await User.isEmailTaken(email)) {
+    return serviceReturn(message.existsEmail(email), 409);
+  }
+
   var user = new User({ name, about, avatar, email, password });
   var savedUser = await user.save();
   return serviceReturn(savedUser, 201);
