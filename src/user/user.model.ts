@@ -1,5 +1,5 @@
-import { MongooseError, Schema, model } from 'mongoose';
-import { hash } from 'bcrypt';
+import { HydratedDocument, Model, MongooseError, Schema, model } from 'mongoose';
+import { compare, hash } from 'bcrypt';
 import { modelValidate } from '../middlewares';
 import { message } from '../messages';
 import { nextFromMongoose } from '../helpers';
@@ -19,6 +19,17 @@ export type UserSchema = {
   updatedAt: Date;
 };
 
+interface UserMethods {
+  isPasswordMatch: (password: string) => Promise<boolean>;
+}
+
+interface UserModel extends Model<UserSchema, {}, UserMethods> {
+  isEmailTaken(
+    email: string,
+    excludeUserId?: string,
+  ): Promise<HydratedDocument<UserSchema, UserMethods>>;
+}
+
 export var USER = {
   nameDefault: 'John Dow',
   nameMaxLength: 30,
@@ -31,7 +42,7 @@ export var USER = {
   avatarDefault: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
 } as const;
 
-const userSchema = new Schema<UserSchema>(
+const userSchema = new Schema<UserSchema, UserModel, UserMethods>(
   {
     name: {
       type: String,
@@ -80,6 +91,22 @@ const userSchema = new Schema<UserSchema>(
   schemaOptions,
 );
 
+userSchema.methods.toJSON = function () {
+  var obj = this.toObject();
+  delete obj.createdAt;
+  delete obj.updatedAt;
+  return obj;
+};
+
+userSchema.methods.isPasswordMatch = async function (password: string) {
+  return compare(password, this.password);
+};
+
+userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
+  var user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
 userSchema.pre('save', async function hashChengedPassword(next) {
   if (this.isModified('password')) {
     this.password = await hash(this.password, 10);
@@ -100,6 +127,6 @@ userSchema.post('findOneAndUpdate', (_error: MongooseError, _doc: any, next: any
   nextFromMongoose(_error, next, _error.message),
 );
 
-export var User = model<UserSchema>('User', userSchema);
+export var User = model<UserSchema, UserModel>('User', userSchema);
 
 export type UserDocument = InstanceType<typeof User>;
