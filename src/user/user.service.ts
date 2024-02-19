@@ -19,7 +19,7 @@ var create = async ({ name, about, avatar, email, password }: UserSchema): Servi
   return serviceReturn(savedUser, 201);
 };
 
-var getAll = async () => serviceReturn(await User.find({}));
+var getAll = async () => serviceReturn(await User.find({}).orFail());
 
 var getById = async (id: string) => serviceReturn(await User.findById(id).orFail());
 
