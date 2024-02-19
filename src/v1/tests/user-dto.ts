@@ -23,6 +23,7 @@ export var mapToTestDTO = (item: UserDocument) => ({
   name: item.name,
   about: item.about,
   avatar: item.avatar,
+  email: item.email,
   _id: item._id.toString(),
 });
 
