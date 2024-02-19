@@ -19,7 +19,7 @@ var create = async ({ name, link, owner }: CreateUser): ServiceReturnPromise => 
   return serviceReturn(savedCard, 201);
 };
 
-var getAll = async () => serviceReturn(await Card.find({}).lean().orFail());
+var getAll = async () => serviceReturn(await Card.find({}).orFail());
 
 var getById = async (id: string) => serviceReturn(await Card.findById(id).orFail());
 
