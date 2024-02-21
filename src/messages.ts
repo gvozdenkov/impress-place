@@ -15,6 +15,8 @@ var validationSchemaPathRequied = (model: string, path: string) =>
   } validation failed: ${path}: Path \`${path}\` is required.`;
 var validationFailed = (model: string, path: string, message: string) =>
   `${model[0].toUpperCase() + model.slice(1)} validation failed: ${path}: ${message}`;
+var invalidEmailOrPwd = () => 'Incorrect email or password';
+var fieldRequired = (v: string) => `The ${v} field is required`;
 
 export var message = {
   minLength,
@@ -22,6 +24,7 @@ export var message = {
   invalidUrl,
   invalidName,
   invalidEmail,
+  invalidEmailOrPwd,
   existsEmail,
   internalServerError,
   notFound,
@@ -30,4 +33,5 @@ export var message = {
   custom,
   validationSchemaPathRequied,
   validationFailed,
+  fieldRequired,
 };
