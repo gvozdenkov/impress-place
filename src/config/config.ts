@@ -13,6 +13,9 @@ var envSchema = joi
     NODE_ENV: joi.string().valid('production', 'development', 'test').required(),
     PORT: joi.number().default(3000),
     BASE_PATH: joi.string().default('/api/v1').description('Api version segment'),
+    JWT_SECTET: joi.string().required(),
+    JWT_ACCESS_TOKEN_EXPIRED: joi.number().required().description('In milliseconds'),
+    JWT_REFRESH_TOKEN_EXPIRED: joi.number().required().description('In milliseconds'),
     MONGODB_URI: joi.string().required().description('Mongo DB url'),
     DB_NAME: joi.string().required().default('mesto-db'),
     MONGODB_URI_TEST: joi.string().required().description('Mongo test DB url'),
@@ -34,6 +37,11 @@ type Config = {
   env: 'production' | 'development' | 'test';
   port: number;
   basePath: string;
+  jwt: {
+    secret: string;
+    accessExpired: number;
+    refreshExpired: number;
+  };
   mongoose: {
     uri: string;
     dbName: string;
@@ -44,6 +52,11 @@ export var config: Config = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   basePath: envVars.BASE_PATH,
+  jwt: {
+    secret: envVars.JWT_SECTET,
+    accessExpired: envVars.JWT_ACCESS_TOKEN_EXPIRED,
+    refreshExpired: envVars.JWT_REFRESH_TOKEN_EXPIRED,
+  },
   mongoose: {
     uri: mongoUri,
     dbName,
