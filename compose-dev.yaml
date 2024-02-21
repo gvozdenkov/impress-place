@@ -33,6 +33,9 @@ services:
       # map env vars from .env file
       - NODE_ENV=${NODE_ENV}
       - PORT=${PORT}
+      - JWT_SECTET=${JWT_SECTET}
+      - JWT_ACCESS_TOKEN_EXPIRED=${JWT_ACCESS_TOKEN_EXPIRED}
+      - JWT_REFRESH_TOKEN_EXPIRED=${JWT_REFRESH_TOKEN_EXPIRED}
       - MONGODB_URI=${MONGODB_URI}
       - DB_NAME=${DB_NAME}
       - MONGODB_URI_TEST=${MONGODB_URI_TEST}
