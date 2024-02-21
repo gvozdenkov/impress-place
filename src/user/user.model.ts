@@ -2,7 +2,7 @@ import { HydratedDocument, Model, MongooseError, Schema, model } from 'mongoose'
 import { compare, hash } from 'bcrypt';
 import { modelValidate } from '../middlewares';
 import { message } from '../messages';
-import { nextFromMongoose } from '../helpers';
+import { nextFromMongoose } from '../utils';
 
 var schemaOptions = {
   versionKey: false,
@@ -95,6 +95,7 @@ userSchema.methods.toJSON = function () {
   var obj = this.toObject();
   delete obj.createdAt;
   delete obj.updatedAt;
+  delete obj.password;
   return obj;
 };
 

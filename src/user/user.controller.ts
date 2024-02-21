@@ -1,23 +1,33 @@
 /* eslint-disable no-underscore-dangle */
-import { Request } from 'express';
-import { ModifiedResponse } from '#types';
-import { userService } from './user.service';
+import { Request, Response } from 'express';
+import { catchAsync, formatResponseData } from '#utils';
+import { userService } from '#services';
 
-var create = (req: Request, res: ModifiedResponse) => res.promise(userService.create(req.body));
+var getAll = catchAsync(async (req: Request, res: Response) => {
+  var users = await userService.getAll();
 
-var getAll = (req: Request, res: ModifiedResponse) => res.promise(userService.getAll());
+  res.status(200).send(formatResponseData(users));
+});
 
-var getById = (req: Request, res: ModifiedResponse) =>
-  res.promise(userService.getById(req.params.userId));
+var getById = catchAsync(async (req: Request, res: Response) => {
+  var user = await userService.getById(req.params.userId);
 
-var updateMe = (req: Request, res: ModifiedResponse) =>
-  res.promise(userService.updateMe(req.user._id, req.body));
+  res.status(200).send(formatResponseData(user));
+});
 
-var updateMeAvatar = (req: Request, res: ModifiedResponse) =>
-  res.promise(userService.updateMeAvatar(req.user._id, req.body));
+var updateMe = catchAsync(async (req: Request, res: Response) => {
+  var updatedUser = await userService.updateMe(req.user._id, req.body);
+
+  res.status(200).send(formatResponseData(updatedUser));
+});
+
+var updateMeAvatar = catchAsync(async (req: Request, res: Response) => {
+  var updatedAvatar = await userService.updateMeAvatar(req.user._id, req.body);
+
+  res.status(200).send(formatResponseData(updatedAvatar));
+});
 
 export var userController = {
-  create,
   getAll,
   getById,
   updateMe,
