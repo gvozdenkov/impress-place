@@ -1,32 +1,7 @@
-import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
 export type ResStatus = 'success' | 'fail' | 'error';
 
-export interface TypedRequestBody<T> extends Request {
-  body: T;
-}
+export type TokenType = 'accessToken' | 'refreshToken';
 
-export interface ErrorWithCode extends Error {
-  code: number;
-}
-
-export interface ModifiedResponse extends Response {
-  [key: string]: any;
-}
-
-export type Data = {
-  status: ResStatus;
-  data: any;
-};
-
-export type Error = {
-  status: ResStatus;
-  message: string;
-};
-
-export type ServiceReturn = {
-  statusCode?: number;
-  data: any;
-};
-
-export type ServiceReturnPromise = Promise<ServiceReturn>;
+export type MongoObjectID = mongoose.Types.ObjectId;
