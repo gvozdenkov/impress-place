@@ -1,6 +1,4 @@
 import { QueryOptions } from 'mongoose';
-import { ServiceReturnPromise } from '#types';
-import { serviceReturn } from '#helpers';
 import { Card, CardSchema } from './card.model';
 
 type CreateUser = {
@@ -13,27 +11,19 @@ var updateOptions: QueryOptions<CardSchema> = {
   returnDocument: 'after',
 };
 
-var create = async ({ name, link, owner }: CreateUser): ServiceReturnPromise => {
-  var card = new Card({ name, link, owner });
-  var savedCard = await card.save();
-  return serviceReturn(savedCard, 201);
-};
+var create = async ({ name, link, owner }: CreateUser) => await Card.create({ name, link, owner });
 
-var getAll = async () => serviceReturn(await Card.find({}).orFail());
+var getAll = async () => await Card.find({}).orFail();
 
-var getById = async (id: string) => serviceReturn(await Card.findById(id).orFail());
+var getById = async (id: string) => await Card.findById(id).orFail();
 
 var setLike = async (id: string, userId: string) =>
-  serviceReturn(
-    await Card.findByIdAndUpdate(id, { $addToSet: { likes: userId } }, updateOptions).orFail(),
-  );
+  await Card.findByIdAndUpdate(id, { $addToSet: { likes: userId } }, updateOptions).orFail();
 
 var removeLike = async (id: string, userId: string) =>
-  serviceReturn(
-    await Card.findByIdAndUpdate(id, { $pull: { likes: userId } }, updateOptions).orFail(),
-  );
+  await Card.findByIdAndUpdate(id, { $pull: { likes: userId } }, updateOptions).orFail();
 
-var deleteById = async (id: string) => serviceReturn(await Card.findByIdAndDelete(id).orFail());
+var deleteById = async (id: string) => await Card.findByIdAndDelete(id).orFail();
 
 export var cardService = {
   create,
