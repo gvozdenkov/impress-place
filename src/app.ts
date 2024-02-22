@@ -19,13 +19,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(config.basePath, router);
 
-// send back a 404 error for any unknown api request
+// 404 error for any unknown request
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
 
-// convert error to ApiError, if needed
+// convert any error to ApiError
 app.use(errorConverter);
 
-// handle error
 app.use(errorHandler);
