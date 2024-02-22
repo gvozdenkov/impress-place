@@ -1,8 +1,7 @@
 import { HydratedDocument, Model, MongooseError, Schema, model } from 'mongoose';
 import { compare, hash } from 'bcrypt';
-import { modelValidate } from '../middlewares';
 import { message } from '../messages';
-import { nextFromMongoose } from '../utils';
+import { modelValidate, nextFromMongoose } from '../utils';
 
 var schemaOptions = {
   versionKey: false,
