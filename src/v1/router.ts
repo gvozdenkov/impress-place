@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { docRouter } from '#docs';
 import { cardRouter } from '#card';
 import { userRouter } from '#user';
+import { authRouter } from '#auth';
 
 var router = Router();
 
@@ -11,5 +12,6 @@ router.get('/', (req, res) => {
 });
 router.use('/cards', cardRouter);
 router.use('/users', userRouter);
+router.use('/auth', authRouter);
 
 export { router };
