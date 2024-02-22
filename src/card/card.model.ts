@@ -1,7 +1,6 @@
 import { Schema, model, Types, MongooseError } from 'mongoose';
-import { modelValidate } from '../middlewares';
 import { message } from '../messages';
-import { nextFromMongoose } from '../helpers';
+import { modelValidate, nextFromMongoose } from '../utils';
 
 var schemaOptions = {
   versionKey: false,
