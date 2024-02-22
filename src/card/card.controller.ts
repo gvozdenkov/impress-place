@@ -1,40 +1,53 @@
 /* eslint-disable no-underscore-dangle */
-import { Request } from 'express';
-import { ModifiedResponse } from '#types';
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import { catchAsync, formatResponseData } from '#utils';
 import { cardService } from './card.service';
 
-var create = (req: Request, res: ModifiedResponse) => {
+var create = catchAsync(async (req: Request, res: Response) => {
   var { body, user } = req;
   var { name, link } = body;
   var owner = user._id;
-  res.promise(cardService.create({ name, link, owner }));
-};
+  var newCard = await cardService.create({ name, link, owner });
 
-var getAll = (req: Request, res: ModifiedResponse) => res.promise(cardService.getAll());
+  res.status(httpStatus.OK).send(formatResponseData(newCard));
+});
 
-var getById = (req: Request, res: ModifiedResponse) =>
-  res.promise(cardService.getById(req.params.carcId));
+var getAll = catchAsync(async (req: Request, res: Response) => {
+  var cards = await cardService.getAll();
 
-var setLike = (req: Request, res: ModifiedResponse) => {
+  res.status(httpStatus.OK).send(formatResponseData(cards));
+});
+
+var getById = catchAsync(async (req: Request, res: Response) => {
+  var card = await cardService.getById(req.params.carcId);
+
+  res.status(httpStatus.OK).send(formatResponseData(card));
+});
+
+var handleLike = catchAsync(async (req: Request, res: Response) => {
   var { params, user } = req;
   var userId = user._id;
-  res.promise(cardService.setLike(params.cardId, userId));
-};
+  var { cardId } = params;
 
-var removeLike = (req: Request, res: ModifiedResponse) => {
-  var { params, user } = req;
-  var userId = user._id;
-  res.promise(cardService.removeLike(params.cardId, userId));
-};
+  var updatedCard =
+    req.method === 'PUT'
+      ? await cardService.setLike(cardId, userId)
+      : await cardService.removeLike(cardId, userId);
 
-var deleteById = (req: Request, res: ModifiedResponse) =>
-  res.promise(cardService.deleteById(req.params.cardId));
+  res.status(httpStatus.OK).send(formatResponseData(updatedCard));
+});
+
+var deleteById = catchAsync(async (req: Request, res: Response) => {
+  var deletedCard = await cardService.deleteById(req.params.cardId);
+
+  res.status(httpStatus.OK).send(formatResponseData(deletedCard));
+});
 
 export var cardController = {
   create,
   getAll,
   getById,
-  setLike,
-  removeLike,
+  handleLike,
   deleteById,
 };
