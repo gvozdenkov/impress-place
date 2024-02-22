@@ -4,17 +4,18 @@ import httpStatus from 'http-status';
 import { ApiError } from '#utils';
 
 export var errorConverter = (err: any, req: Request, res: Response, next: NextFunction) => {
-  var apiError;
+  var apiError = err;
 
-  if (!(err instanceof ApiError)) {
+  if (!(apiError instanceof ApiError)) {
     var statusCode =
-      err.statusCode || err instanceof mongoose.Error
+      apiError.statusCode || apiError instanceof mongoose.Error
         ? httpStatus.BAD_REQUEST
         : httpStatus.INTERNAL_SERVER_ERROR;
-    var message = err.message || httpStatus[statusCode];
+    var message = apiError.message || httpStatus[statusCode];
 
     apiError = new ApiError(statusCode, message);
   }
+
   next(apiError);
 };
 
