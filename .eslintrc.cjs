@@ -39,6 +39,7 @@ module.exports = {
     "prettier/prettier": ["error"],
     semi: "error",
     "no-var": 0,
+    "block-scoped-var": "off",
     "vars-on-top": 0,
     "@typescript-eslint/no-unused-vars": ["error"],
     "@typescript-eslint/no-shadow": 0,
