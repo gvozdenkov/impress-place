@@ -1,8 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import httpStatus from 'http-status';
-import { router } from '#v1';
-import { auth, errorConverter, errorHandler } from '#middlewares';
+import cookieParser from 'cookie-parser';
 import { config } from '#config';
 import { connectDb } from '#mongo-connect';
 import { ApiError } from '#utils';
@@ -11,7 +10,7 @@ connectDb();
 
 export var app: Application = express();
 
-app.use(auth);
+app.use(cookieParser());
 
 app.use(cors());
 app.use(express.json());
