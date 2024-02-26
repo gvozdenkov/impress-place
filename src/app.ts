@@ -2,9 +2,13 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import httpStatus from 'http-status';
 import cookieParser from 'cookie-parser';
+import { routerV1 } from '#v1';
+import { errorConverter, errorHandler } from '#middlewares';
 import { config } from '#config';
 import { connectDb } from '#mongo-connect';
 import { ApiError } from '#utils';
+
+var { basePath } = config;
 
 connectDb();
 
@@ -16,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(config.basePath, router);
+app.use(`${basePath}/v1`, routerV1);
 
 // 404 error for any unknown request
 app.use((req, res, next) => {
