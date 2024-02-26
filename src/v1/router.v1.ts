@@ -4,14 +4,14 @@ import { cardRouter } from '#card';
 import { userRouter } from '#user';
 import { authRouter } from '#auth';
 
-var router = Router();
+var routerV1 = Router();
 
-router.use('/docs', docRouter);
-router.get('/', (req, res) => {
+routerV1.use('/docs', docRouter);
+routerV1.get('/', (req, res) => {
   res.json({ message: 'It works!' });
 });
-router.use('/cards', cardRouter);
-router.use('/users', userRouter);
-router.use('/auth', authRouter);
+routerV1.use('/cards', cardRouter);
+routerV1.use('/users', userRouter);
+routerV1.use('/auth', authRouter);
 
-export { router };
+export { routerV1 };
