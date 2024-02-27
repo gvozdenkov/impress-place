@@ -1,13 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-import { USER, User, UserDocument } from '../../user';
-import { randomeString } from './util';
+import { randomeString } from '#utils';
+import { USER, User, UserDocument } from '../../../user';
 
 export var randomeUser = (options = {}) => {
   var name = randomeString(USER.nameMinLength, USER.nameMaxLength);
   var about = randomeString(USER.aboutMinLength, USER.aboutMaxLength);
   var avatar = randomeString(8, 12);
   var email = randomeString(5, 10).toLowerCase();
-  var password = 'password1234';
+  var password = randomeString(8, 15);
 
   return {
     name,
