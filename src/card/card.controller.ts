@@ -5,9 +5,8 @@ import { catchAsync, formatResponseData } from '#utils';
 import { cardService } from './card.service';
 
 var create = catchAsync(async (req: Request, res: Response) => {
-  var { body, user } = req;
+  var { body, userId: owner } = req;
   var { name, link } = body;
-  var owner = user._id;
   var newCard = await cardService.create({ name, link, owner });
 
   res.status(httpStatus.OK).send(formatResponseData(newCard));
@@ -26,8 +25,7 @@ var getById = catchAsync(async (req: Request, res: Response) => {
 });
 
 var handleLike = catchAsync(async (req: Request, res: Response) => {
-  var { params, user } = req;
-  var userId = user._id;
+  var { params, userId } = req;
   var { cardId } = params;
 
   var updatedCard =
