@@ -1,16 +1,15 @@
 import { Response } from 'express';
 import { TokenType } from '#types';
+import { config } from '#config';
 
-var setTokenCookie = (res: Response, type: TokenType, token: string, expiresTime: number) => {
-  var currentDate = new Date();
-  var accessTokenExpires = new Date(currentDate.getTime() + expiresTime);
+var { env } = config;
 
+var setTokenCookie = (res: Response, type: TokenType, token: string, expires: Date) =>
   res.cookie(type, token, {
-    secure: true,
+    secure: env === 'production',
     httpOnly: true,
-    expires: accessTokenExpires,
+    expires,
   });
-};
 
 export var cookieService = {
   setTokenCookie,
