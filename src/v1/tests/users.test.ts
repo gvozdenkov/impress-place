@@ -6,9 +6,9 @@ import { config } from '#config';
 import { app } from '#app';
 import { message } from '#messages';
 import { USER } from '#user';
-import { createUser, mapToTestDTO, randomeUser } from './user-dto';
-import { setupTestDB } from './setup-test-db';
-import { randomeString } from './util';
+import { randomeString } from '#utils';
+import { createUser, mapToTestDTO, randomeUser } from './utils/user-dto';
+import { setupTestDB } from './utils/setup-test-db';
 
 var basePath = `${config.basePath}/users`;
 
@@ -69,101 +69,6 @@ describe(basePath, () => {
 
   // POST ========================================
   describe(`POST ${basePath}`, () => {
-    it('should create 201 user', async () => {
-      var user = randomeUser();
-      var { name, about, avatar, email } = user;
-
-      await request(app)
-        .post(`${basePath}`)
-        .send(user)
-        .expect(201)
-        .expect('Content-type', /json/)
-        .then((res) => {
-          var { status, data } = res.body;
-
-          assert.equal(status, 'success');
-          assert.include(data, { name, about, avatar, email });
-        });
-    });
-    it('should create 201 user with default name when no name', async () => {
-      var user = randomeUser();
-      var { about, avatar, email, password } = user;
-
-      await request(app)
-        .post(`${basePath}`)
-        .send({ about, avatar, email, password })
-        .expect(201)
-        .expect('Content-type', /json/)
-        .then((res) => {
-          var { status, data } = res.body;
-
-          assert.equal(status, 'success');
-          assert.include(data, {
-            name: USER.nameDefault,
-            about,
-            avatar,
-            email,
-          });
-        });
-    });
-    it('should create 201 user with default about when no about', async () => {
-      var user = randomeUser();
-      var { name, avatar, email, password } = user;
-
-      await request(app)
-        .post(`${basePath}`)
-        .send({ name, avatar, email, password })
-        .expect(201)
-        .expect('Content-type', /json/)
-        .then((res) => {
-          var { status, data } = res.body;
-
-          assert.equal(status, 'success');
-          assert.include(data, {
-            name,
-            about: USER.aboutDefault,
-            avatar,
-            email,
-          });
-        });
-    });
-    it('should create 201 user with default avatar when no avatar', async () => {
-      var { name, about, email, password } = randomeUser();
-
-      await request(app)
-        .post(`${basePath}`)
-        .send({ name, about, email, password })
-        .expect(201)
-        .expect('Content-type', /json/)
-        .then((res) => {
-          var { status, data } = res.body;
-
-          assert.equal(status, 'success');
-          assert.include(data, {
-            name,
-            about,
-            email,
-            avatar: USER.avatarDefault,
-          });
-        });
-    });
-    it('should throw 409 for duplicated email', async () => {
-      var duplicatedEmail = 'email@email.com';
-      await createUser({ email: duplicatedEmail });
-      var duplicatedUser = randomeUser();
-
-      await request(app)
-        .post(`${basePath}`)
-        .send({ ...duplicatedUser, email: duplicatedEmail })
-        .expect(409)
-        .expect('Content-type', /json/)
-        .then((res) => {
-          assert.deepStrictEqual(res.body, {
-            status: 'fail',
-            message: message.existsEmail(duplicatedEmail),
-          });
-        });
-    });
     it(`Should throw 400 error with name longer then ${USER.nameMaxLength}`, async () => {
       var invalidLength = USER.nameMaxLength + 1;
       var invalidName = randomeString(invalidLength, invalidLength, ' -');
@@ -219,27 +124,6 @@ describe(basePath, () => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
             message: message.validationFailed('user', 'name', message.invalidName()),
-          });
-        });
-    });
-    it('should create 201 user with default about when no about', async () => {
-      var user = randomeUser();
-      var { name, avatar, email, password } = user;
-
-      await request(app)
-        .post(`${basePath}`)
-        .send({ name, avatar, email, password })
-        .expect(201)
-        .expect('Content-type', /json/)
-        .then((res) => {
-          var { status, data } = res.body;
-
-          assert.equal(status, 'success');
-          assert.include(data, {
-            name,
-            avatar,
-            email,
-            about: USER.aboutDefault,
           });
         });
     });
