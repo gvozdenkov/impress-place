@@ -14,8 +14,8 @@ var envSchema = joi
     PORT: joi.number().default(3000),
     BASE_PATH: joi.string().default('/api/v1').description('Api version segment'),
     JWT_SECTET: joi.string().required(),
-    JWT_ACCESS_TOKEN_EXPIRED: joi.number().required().description('In milliseconds'),
-    JWT_REFRESH_TOKEN_EXPIRED: joi.number().required().description('In milliseconds'),
+    JWT_ACCESS_TOKEN_EXPIRESIN: joi.number().required().description('In seconds'),
+    JWT_REFRESH_TOKEN_EXPIRESIN: joi.number().required().description('In seconds'),
     MONGODB_URI: joi.string().required().description('Mongo DB url'),
     DB_NAME: joi.string().required().default('mesto-db'),
     MONGODB_URI_TEST: joi.string().required().description('Mongo test DB url'),
@@ -39,8 +39,8 @@ type Config = {
   basePath: string;
   jwt: {
     secret: string;
-    accessExpired: number;
-    refreshExpired: number;
+    accessExpiresIn: number;
+    refreshExpiresIn: number;
   };
   mongoose: {
     uri: string;
@@ -54,8 +54,8 @@ export var config: Config = {
   basePath: envVars.BASE_PATH,
   jwt: {
     secret: envVars.JWT_SECTET,
-    accessExpired: envVars.JWT_ACCESS_TOKEN_EXPIRED,
-    refreshExpired: envVars.JWT_REFRESH_TOKEN_EXPIRED,
+    accessExpiresIn: envVars.JWT_ACCESS_TOKEN_EXPIRESIN,
+    refreshExpiresIn: envVars.JWT_REFRESH_TOKEN_EXPIRESIN,
   },
   mongoose: {
     uri: mongoUri,
