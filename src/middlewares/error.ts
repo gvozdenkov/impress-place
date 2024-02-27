@@ -22,11 +22,13 @@ export var errorConverter = (err: any, req: Request, res: Response, next: NextFu
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export var errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
   var { statusCode, message } = err;
+  var status =
+    statusCode >= httpStatus.BAD_REQUEST && statusCode < httpStatus.INTERNAL_SERVER_ERROR
+      ? 'fail'
+      : 'error';
 
-  statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-
-  res.status(statusCode).send({
-    status: 'fail',
+  res.status(statusCode || httpStatus.INTERNAL_SERVER_ERROR).send({
+    status,
     message,
   });
 };
