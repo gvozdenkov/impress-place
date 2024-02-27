@@ -4,11 +4,9 @@ import httpStatus from 'http-status';
 import cookieParser from 'cookie-parser';
 import { routerV1 } from '#v1';
 import { errorConverter, errorHandler } from '#middlewares';
-import { config } from '#config';
 import { connectDb } from '#mongo-connect';
 import { ApiError } from '#utils';
-
-var { basePath } = config;
+import { basePathV1 } from '#v1/router.v1';
 
 connectDb();
 
@@ -19,8 +17,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(`${basePath}/v1`, routerV1);
+app.use(basePathV1, routerV1);
 
 // 404 error for any unknown request
 app.use((req, res, next) => {
