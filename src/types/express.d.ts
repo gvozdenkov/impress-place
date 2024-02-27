@@ -1,7 +1,9 @@
-declare namespace Express {
-  export interface Request {
-    user: {
-      _id: string
+import { UserId } from "./types";
+
+declare global {
+  namespace Express {
+    interface Request {
+      userId: UserId;
     }
   }
 }

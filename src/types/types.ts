@@ -1,7 +1,9 @@
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 export type ResStatus = 'success' | 'fail' | 'error';
 
 export type TokenType = 'accessToken' | 'refreshToken';
 
-export type MongoObjectID = mongoose.Types.ObjectId;
+export type UserId = string | Types.ObjectId;
+
+export type CardId = UserId;
