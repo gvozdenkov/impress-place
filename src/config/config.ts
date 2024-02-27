@@ -12,7 +12,7 @@ var envSchema = joi
   .keys({
     NODE_ENV: joi.string().valid('production', 'development', 'test').required(),
     PORT: joi.number().default(3000),
-    BASE_PATH: joi.string().default('/api/v1').description('Api version segment'),
+    BASE_PATH: joi.string().default('/api').description('Api version segment'),
     JWT_SECTET: joi.string().required(),
     JWT_ACCESS_TOKEN_EXPIRESIN: joi.number().required().description('In seconds'),
     JWT_REFRESH_TOKEN_EXPIRESIN: joi.number().required().description('In seconds'),
