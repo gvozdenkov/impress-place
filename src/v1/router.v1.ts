@@ -14,6 +14,6 @@ routerV1.get('/', (req, res) => {
 });
 routerV1.use('/cards', cardRouter);
 routerV1.use('/users', userRouter);
-routerV1.use('/auth', authRouter);
+routerV1.use('/', authRouter);
 
 export { routerV1, basePathV1 };
