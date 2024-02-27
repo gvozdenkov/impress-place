@@ -1,9 +1,12 @@
 import jwt from 'jsonwebtoken';
-import { MongoObjectID } from '#types';
+import { UserId } from '#types';
 
-var generate = (userId: string | MongoObjectID, secret: string) =>
-  jwt.sign({ _id: userId }, secret);
+var generate = (userId: UserId, secret: string, expiresIn: number) =>
+  jwt.sign({ _id: userId }, secret, { expiresIn });
+
+var verify = (token: string, secret: string) => <{ _id: UserId }>jwt.verify(token, secret);
 
 export var tokenService = {
   generate,
+  verify,
 };
