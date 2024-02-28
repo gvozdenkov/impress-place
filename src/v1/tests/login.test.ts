@@ -8,8 +8,8 @@ import { tokenService } from '#services';
 import { message } from '#messages';
 import { User } from '#user';
 import { basePathV1 } from '#v1';
-import { setupTestDB, testDefaultUser } from './utils/setup-test-db';
-import { extractCookies } from '../../utils/test-utils/extract-cookies';
+import { extractCookies } from '#utils';
+import { setupTestDB, testDefaultUser } from './utils';
 
 var { secret } = config.jwt;
 

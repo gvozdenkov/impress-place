@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+import { USER, User, UserDocument } from '#user';
 import { randomeString } from '#utils';
-import { USER, User, UserDocument } from '../../../user';
 
 export var randomeUser = (options = {}) => {
   var name = randomeString(USER.nameMinLength, USER.nameMaxLength);
