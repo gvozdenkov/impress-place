@@ -118,7 +118,7 @@ describe('Auth Service', () => {
     });
 
     // ==================== Fail create new user ====================
-    it('If email already exists, should fail to create a new user', async () => {
+    it('Should fail to create a new user, if email already exists', async () => {
       var user = randomeUser();
       await createUser({ ...user });
       var { email } = user;
@@ -135,7 +135,7 @@ describe('Auth Service', () => {
           });
         });
     });
-    it(`If 'name' longer then ${USER.nameMaxLength}, should fail to create a new user`, async () => {
+    it(`Should fail to create a new user, if 'name' longer then ${USER.nameMaxLength}`, async () => {
       var invalidLength = USER.nameMaxLength + 1;
       var invalidName = randomeString(invalidLength, invalidLength);
       var user = randomeUser({ name: invalidName });
@@ -156,7 +156,7 @@ describe('Auth Service', () => {
           });
         });
     });
-    it(`If 'name' shorter then ${USER.nameMinLength}, should fail to create a new user`, async () => {
+    it(`Should fail to create a new user, if 'name' shorter then ${USER.nameMinLength}`, async () => {
       var invalidLength = USER.nameMinLength - 1;
       var invalidName = randomeString(invalidLength, invalidLength, ' -');
       var user = randomeUser({ name: invalidName });
@@ -177,7 +177,7 @@ describe('Auth Service', () => {
           });
         });
     });
-    it(`If 'name' have invalid cheracters, should fail to create a new user`, async () => {
+    it("should fail to create a new user, if 'name' have invalid cheracters", async () => {
       var invalidName = `${randomeString(USER.nameMinLength, USER.nameMaxLength)}+`;
       var user = randomeUser({ name: invalidName });
 
@@ -193,7 +193,7 @@ describe('Auth Service', () => {
           });
         });
     });
-    it(`If 'about' longer then ${USER.aboutMaxLength}, should fail to create a new user`, async () => {
+    it(`Should fail to create a new user, if 'about' longer then ${USER.aboutMaxLength}`, async () => {
       var invalidLength = USER.aboutMaxLength + 1;
       var invalidAbout = randomeString(invalidLength, invalidLength);
       var user = randomeUser({ about: invalidAbout });
@@ -214,7 +214,7 @@ describe('Auth Service', () => {
           });
         });
     });
-    it(`If 'about' shorter then ${USER.aboutMinLength}, should fail to create a new user`, async () => {
+    it(`Should fail to create a new user, if 'about' shorter then ${USER.aboutMinLength}`, async () => {
       var invalidLength = USER.aboutMinLength - 1;
       var invalidAbout = randomeString(invalidLength, invalidLength);
       var user = randomeUser({ about: invalidAbout });
@@ -235,7 +235,7 @@ describe('Auth Service', () => {
           });
         });
     });
-    it("If invalid 'avatar' url, should fail to create a new user", async () => {
+    it("Should fail to create a new user, if invalid 'avatar' url", async () => {
       var user = randomeUser({ avatar: 'invalid url' });
 
       await request(app)
