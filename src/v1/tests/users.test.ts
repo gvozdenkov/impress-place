@@ -67,7 +67,7 @@ describe('User service', () => {
           });
         });
     });
-    it('Should throw 404 "User not found" for wrong id', async () => {
+    it('Should fail "User not found" for wrong id', async () => {
       var { email, password } = testDefaultUser;
 
       var cookies = await getReqCookies({ email, password });
