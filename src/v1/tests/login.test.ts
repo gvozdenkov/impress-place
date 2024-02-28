@@ -20,8 +20,7 @@ setupTestDB();
 describe('Auth service', () => {
   describe('Login user', () => {
     beforeEach((done) => {
-      var defaultUser = new User(testDefaultUser);
-      defaultUser.save().then(() => done());
+      User.create(testDefaultUser).then(() => done());
     });
     it('Signin if email exists and password correct', async () => {
       var { name, about, avatar, email, password } = testDefaultUser;
