@@ -2,11 +2,10 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import httpStatus from 'http-status';
 import cookieParser from 'cookie-parser';
-import { routerV1 } from '#v1';
+import { routerV1, basePathV1 } from '#v1';
 import { errorConverter, errorHandler } from '#middlewares';
 import { connectDb } from '#mongo-connect';
 import { ApiError } from '#utils';
-import { basePathV1 } from '#v1/router.v1';
 
 connectDb();
 
