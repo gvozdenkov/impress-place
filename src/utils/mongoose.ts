@@ -1,23 +1,26 @@
 import { NextFunction } from 'express';
 import { MongooseError } from 'mongoose';
 import { message } from '../messages';
+import { ApiError } from './api-error';
 
-var mongooseErrorType: Record<string, number> = {
+type MongooseErrorType = Record<string, number>;
+
+var mongooseErrorType: MongooseErrorType = {
   CastError: 404,
   DocumentNotFoundError: 404,
   ValidationError: 400,
 };
 
-var getErrorCode = (error: MongooseError) => mongooseErrorType[error.name] || 500;
+var catchError =
+  (errorType: MongooseErrorType) =>
+  (error: MongooseError, next: NextFunction, customMessage?: string) => {
+    var code = errorType[error.name] || 500;
+    var errorMessage =
+      code >= 500 && !customMessage
+        ? message.internalServerError()
+        : customMessage || error.message;
 
-export var nextFromMongoose = (
-  error: MongooseError,
-  next: NextFunction,
-  customMessage?: string,
-) => {
-  var code = getErrorCode(error);
-  var errorMessage =
-    code === 500 && !customMessage ? message.internalServerError() : customMessage || error.message;
+    throw new ApiError(code, errorMessage);
+  };
 
-  next({ code, message: errorMessage });
-};
+export var catchMongooseError = catchError(mongooseErrorType);
