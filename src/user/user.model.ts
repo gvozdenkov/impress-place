@@ -1,7 +1,7 @@
 import { HydratedDocument, Model, MongooseError, Schema, model } from 'mongoose';
 import { compare, hash } from 'bcrypt';
 import { message } from '../messages';
-import { modelValidate, nextFromMongoose } from '../utils';
+import { modelValidate, catchMongooseError } from '../utils';
 
 var schemaOptions = {
   versionKey: false,
@@ -116,15 +116,15 @@ userSchema.pre('save', async function hashChengedPassword(next) {
 });
 
 userSchema.post('save', (_error: MongooseError, _doc: any, next: any) =>
-  nextFromMongoose(_error, next),
+  catchMongooseError(_error, next),
 );
 
 userSchema.post('findOne', (_error: MongooseError, _doc: any, next: any) =>
-  nextFromMongoose(_error, next, message.notFound('user')),
+  catchMongooseError(_error, next, message.notFound('user')),
 );
 
 userSchema.post('findOneAndUpdate', (_error: MongooseError, _doc: any, next: any) =>
-  nextFromMongoose(_error, next, _error.message),
+  catchMongooseError(_error, next, _error.message),
 );
 
 export var User = model<UserSchema, UserModel>('User', userSchema);
