@@ -1,3 +1,3 @@
 export { getReqCookies } from './get-header-cookies';
-export { setupTestDB, testDefaultUser } from './setup-test-db';
-export { createUser, mapToTestDTO, randomeUser } from './user-dto';
+export { setupTestDB, testUserOne } from './setup-test-db';
+export { createUser, mapUserToTestDTO, randomeUser } from './user-dto';

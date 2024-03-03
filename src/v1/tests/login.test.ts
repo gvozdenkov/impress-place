@@ -9,7 +9,7 @@ import { message } from '#messages';
 import { User } from '#user';
 import { basePathV1 } from '#v1';
 import { extractCookies } from '#utils';
-import { setupTestDB, testDefaultUser } from './utils';
+import { setupTestDB, testUserOne } from './utils';
 
 var { secret } = config.jwt;
 
@@ -20,10 +20,10 @@ setupTestDB();
 describe('Auth service', () => {
   describe('Login user', () => {
     beforeEach((done) => {
-      User.create(testDefaultUser).then(() => done());
+      User.create(testUserOne).then(() => done());
     });
-    it('Signin if email exists and password correct', async () => {
-      var { name, about, avatar, email, password } = testDefaultUser;
+    it('Should signin if email exists and password correct', async () => {
+      var { name, about, avatar, email, password } = testUserOne;
 
       await request(app)
         .post(loginPath)
@@ -43,8 +43,8 @@ describe('Auth service', () => {
           assert.strictEqual(data._id, token._id);
         });
     });
-    it('Do signin with a non-existent email or incorrect password', async () => {
-      var { email, password } = testDefaultUser;
+    it('Should not signin with a non-existent email or incorrect password', async () => {
+      var { email, password } = testUserOne;
       var wrongEmail = 'wrong@mail.com';
       var wrongPassword = 'wrong-password';
 

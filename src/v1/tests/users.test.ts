@@ -6,7 +6,7 @@ import { app } from '#app';
 import { basePathV1 } from '#v1';
 import { message } from '#messages';
 import { User, UserDocument } from '#user';
-import { createUser, getReqCookies, mapToTestDTO, setupTestDB, testDefaultUser } from './utils';
+import { createUser, getReqCookies, mapUserToTestDTO, setupTestDB, testUserOne } from './utils';
 
 var basePath = `${basePathV1}/users`;
 var logedInUser: UserDocument;
@@ -17,13 +17,13 @@ describe('User service', () => {
   // GET ========================================
   describe('Get all users', () => {
     beforeEach((done) => {
-      User.create(testDefaultUser).then((user) => {
+      User.create(testUserOne).then((user) => {
         logedInUser = user;
         done();
       });
     });
     it('Should return all users', async () => {
-      var { email, password } = testDefaultUser;
+      var { email, password } = testUserOne;
       var user1 = await createUser();
       var user2 = await createUser();
 
@@ -37,20 +37,20 @@ describe('User service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'success',
-            data: [mapToTestDTO(logedInUser), mapToTestDTO(user1), mapToTestDTO(user2)],
+            data: [mapUserToTestDTO(logedInUser), mapUserToTestDTO(user1), mapUserToTestDTO(user2)],
           });
         });
     });
   });
   describe(`Get user by id`, () => {
     beforeEach((done) => {
-      User.create(testDefaultUser).then((user) => {
+      User.create(testUserOne).then((user) => {
         logedInUser = user;
         done();
       });
     });
     it('Should return user by id', async () => {
-      var { email, password } = testDefaultUser;
+      var { email, password } = testUserOne;
       var _id = logedInUser._id.toString();
 
       var cookies = await getReqCookies({ email, password });
@@ -63,12 +63,12 @@ describe('User service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'success',
-            data: mapToTestDTO(logedInUser),
+            data: mapUserToTestDTO(logedInUser),
           });
         });
     });
     it('Should fail "User not found" for wrong id', async () => {
-      var { email, password } = testDefaultUser;
+      var { email, password } = testUserOne;
 
       var cookies = await getReqCookies({ email, password });
       var wrongId = 'someWrongId123';
