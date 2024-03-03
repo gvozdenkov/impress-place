@@ -11,19 +11,19 @@ var create = catchAsync(async (req: Request, res: Response) => {
   var { name, link } = body;
   var newCard = await cardService.create({ name, link, owner });
 
-  res.status(httpStatus.OK).send(formatResponseData(newCard));
+  res.status(httpStatus.OK).json(formatResponseData(newCard));
 });
 
 var getAll = catchAsync(async (req: Request, res: Response) => {
   var cards = await cardService.getAll();
 
-  res.status(httpStatus.OK).send(formatResponseData(cards));
+  res.status(httpStatus.OK).json(formatResponseData(cards));
 });
 
 var getById = catchAsync(async (req: Request, res: Response) => {
   var card = await cardService.getById(req.params.carcId);
 
-  res.status(httpStatus.OK).send(formatResponseData(card));
+  res.status(httpStatus.OK).json(formatResponseData(card));
 });
 
 var handleLike = catchAsync(async (req: Request, res: Response) => {
@@ -35,7 +35,7 @@ var handleLike = catchAsync(async (req: Request, res: Response) => {
       ? await cardService.setLike(cardId, userId)
       : await cardService.removeLike(cardId, userId);
 
-  res.status(httpStatus.OK).send(formatResponseData(updatedCard));
+  res.status(httpStatus.OK).json(formatResponseData(updatedCard));
 });
 
 var deleteById = catchAsync(async (req: Request, res: Response) => {
@@ -49,7 +49,7 @@ var deleteById = catchAsync(async (req: Request, res: Response) => {
 
   var deletedCard = await cardService.deleteById(req.params.cardId);
 
-  res.status(httpStatus.OK).send(formatResponseData(deletedCard));
+  res.status(httpStatus.OK).json(formatResponseData(deletedCard));
 });
 
 export var cardController = {

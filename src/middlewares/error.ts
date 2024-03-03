@@ -27,7 +27,7 @@ export var errorHandler = (err: any, req: Request, res: Response, next: NextFunc
       ? 'fail'
       : 'error';
 
-  res.status(statusCode || httpStatus.INTERNAL_SERVER_ERROR).send({
+  res.status(statusCode || httpStatus.INTERNAL_SERVER_ERROR).json({
     status,
     message,
   });
