@@ -19,12 +19,12 @@ export var randomeUser = (options = {}) => {
   };
 };
 
-export var mapToTestDTO = (item: UserDocument) => ({
-  name: item.name,
-  about: item.about,
-  avatar: item.avatar,
-  email: item.email,
-  _id: item._id.toString(),
+export var mapUserToTestDTO = (user: UserDocument) => ({
+  name: user.name,
+  about: user.about,
+  avatar: user.avatar,
+  email: user.email,
+  _id: user._id.toString(),
 });
 
 export var createUser = async (options = {}) =>
