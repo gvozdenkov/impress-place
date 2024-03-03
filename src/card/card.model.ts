@@ -50,6 +50,13 @@ var cardSchema = new Schema<CardSchema>(
   schemaOptions,
 );
 
+cardSchema.methods.toJSON = function () {
+  var obj = this.toObject();
+  delete obj.createdAt;
+  delete obj.updatedAt;
+  return obj;
+};
+
 cardSchema.post('findOne', (_error: MongooseError, _doc: any, next: any) =>
   catchMongooseError(_error, next, message.notFound('card')),
 );
@@ -63,3 +70,5 @@ cardSchema.post('findOneAndUpdate', (_error: MongooseError, _doc: any, next: any
 );
 
 export var Card = model<CardSchema>('Card', cardSchema);
+
+export type CardDocument = InstanceType<typeof Card>;
