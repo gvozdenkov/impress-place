@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-underscore-dangle */
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
-import { catchAsync, formatResponseData } from '#utils';
+import { ApiError, catchAsync, formatResponseData } from '#utils';
+import { message } from '#messages';
 import { cardService } from './card.service';
 
 var create = catchAsync(async (req: Request, res: Response) => {
@@ -37,6 +39,14 @@ var handleLike = catchAsync(async (req: Request, res: Response) => {
 });
 
 var deleteById = catchAsync(async (req: Request, res: Response) => {
+  var { params, userId } = req;
+  var { cardId } = params;
+
+  var { owner } = await cardService.getById(cardId);
+
+  if (userId !== owner.toString())
+    throw new ApiError(httpStatus.FORBIDDEN, message.forbiddenCardDelete());
+
   var deletedCard = await cardService.deleteById(req.params.cardId);
 
   res.status(httpStatus.OK).send(formatResponseData(deletedCard));

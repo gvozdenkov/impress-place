@@ -17,7 +17,8 @@ var validationFailed = (model: string, path: string, message: string) =>
   `${model[0].toUpperCase() + model.slice(1)} validation failed: ${path}: ${message}`;
 var invalidEmailOrPwd = () => 'Incorrect email or password';
 var fieldRequired = (v: string) => `The ${v} field is required`;
-var unauthorized = () => 'You should be authorized to access this adress';
+var unauthorized = () => 'You should be authorized';
+var forbiddenCardDelete = () => 'You cannot delete a card that is not yours';
 
 export var message = {
   minLength,
@@ -36,4 +37,5 @@ export var message = {
   validationFailed,
   fieldRequired,
   unauthorized,
+  forbiddenCardDelete,
 };
