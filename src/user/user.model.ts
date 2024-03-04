@@ -47,26 +47,26 @@ const userSchema = new Schema<UserSchema, UserModel, UserMethods>(
       type: String,
       trim: true,
       default: USER.nameDefault,
-      minlength: [USER.nameMinLength, message.minLength(USER.nameMinLength)],
-      maxlength: [USER.nameMaxLength, message.maxLength(USER.nameMaxLength)],
+      minlength: [USER.nameMinLength, message.minLength('name', USER.nameMinLength)],
+      maxlength: [USER.nameMaxLength, message.maxLength('name', USER.nameMaxLength)],
       validate: {
         validator: (v: string) => validate.name(v),
-        message: message.invalidName(),
+        message: message.invalidInput('name'),
       },
     },
     about: {
       type: String,
       trim: true,
       default: USER.aboutDefault,
-      minlength: [USER.aboutMinLength, message.minLength(USER.aboutMinLength)],
-      maxlength: [USER.aboutMaxLength, message.maxLength(USER.aboutMaxLength)],
+      minlength: [USER.aboutMinLength, message.minLength('about', USER.aboutMinLength)],
+      maxlength: [USER.aboutMaxLength, message.maxLength('about', USER.aboutMaxLength)],
     },
     avatar: {
       type: String,
       default: USER.avatarDefault,
       validate: {
         validator: (v: string) => validate.url(v),
-        message: message.invalidUrl(),
+        message: message.invalidUrl('avatar'),
       },
     },
     email: {
@@ -77,7 +77,7 @@ const userSchema = new Schema<UserSchema, UserModel, UserMethods>(
       trim: true,
       validate: {
         validator: (v: string) => validate.email(v),
-        message: message.invalidEmail(),
+        message: message.invalidEmail('email'),
       },
     },
     password: {

@@ -148,11 +148,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.validationFailed(
-              'user',
-              'name',
-              message.maxLength(USER.nameMaxLength),
-            ),
+            message: message.maxLength('name', USER.nameMaxLength),
           });
         });
     });
@@ -169,11 +165,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.validationFailed(
-              'user',
-              'name',
-              message.minLength(USER.nameMinLength),
-            ),
+            message: message.minLength('name', USER.nameMinLength),
           });
         });
     });
@@ -189,7 +181,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.validationFailed('user', 'name', message.invalidName()),
+            message: message.invalidInput('name'),
           });
         });
     });
@@ -206,11 +198,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.validationFailed(
-              'user',
-              'about',
-              message.maxLength(USER.aboutMaxLength),
-            ),
+            message: message.maxLength('about', USER.aboutMaxLength),
           });
         });
     });
@@ -227,11 +215,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.validationFailed(
-              'user',
-              'about',
-              message.minLength(USER.aboutMinLength),
-            ),
+            message: message.minLength('about', USER.nameMinLength),
           });
         });
     });
@@ -246,7 +230,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.validationFailed('user', 'avatar', message.invalidUrl()),
+            message: message.invalidUrl('avatar'),
           });
         });
     });

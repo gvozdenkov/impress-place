@@ -15,8 +15,8 @@ export type CardSchema = {
 };
 
 export var CARD = {
-  nameCardMinLength: 2,
-  nameCardMaxLength: 30,
+  nameMinLength: 2,
+  nameMaxLength: 30,
 } as const;
 
 var cardSchema = new Schema<CardSchema>(
@@ -25,8 +25,8 @@ var cardSchema = new Schema<CardSchema>(
       type: String,
       required: true,
       trim: true,
-      minlength: [CARD.nameCardMinLength, message.minLength(CARD.nameCardMinLength)],
-      maxlength: [CARD.nameCardMaxLength, message.maxLength(CARD.nameCardMaxLength)],
+      minlength: [CARD.nameMinLength, message.minLength('name', CARD.nameMinLength)],
+      maxlength: [CARD.nameMaxLength, message.maxLength('name', CARD.nameMaxLength)],
     },
     link: {
       type: String,
@@ -34,7 +34,7 @@ var cardSchema = new Schema<CardSchema>(
       trim: true,
       validate: {
         validator: (v: string) => validate.url(v),
-        message: message.invalidUrl(),
+        message: message.invalidUrl('link'),
       },
     },
     likes: {
