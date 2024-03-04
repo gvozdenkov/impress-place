@@ -1,7 +1,7 @@
 import { HydratedDocument, Model, MongooseError, Schema, model } from 'mongoose';
 import { compare, hash } from 'bcrypt';
 import { message } from '../messages';
-import { modelValidate, catchMongooseError } from '../utils';
+import { validate, catchMongooseError } from '../utils';
 
 var schemaOptions = {
   versionKey: false,
@@ -50,7 +50,7 @@ const userSchema = new Schema<UserSchema, UserModel, UserMethods>(
       minlength: [USER.nameMinLength, message.minLength(USER.nameMinLength)],
       maxlength: [USER.nameMaxLength, message.maxLength(USER.nameMaxLength)],
       validate: {
-        validator: (v: string) => modelValidate.name(v),
+        validator: (v: string) => validate.name(v),
         message: message.invalidName(),
       },
     },
@@ -65,7 +65,7 @@ const userSchema = new Schema<UserSchema, UserModel, UserMethods>(
       type: String,
       default: USER.avatarDefault,
       validate: {
-        validator: (v: string) => modelValidate.url(v),
+        validator: (v: string) => validate.url(v),
         message: message.invalidUrl(),
       },
     },
@@ -76,7 +76,7 @@ const userSchema = new Schema<UserSchema, UserModel, UserMethods>(
       lowercase: true,
       trim: true,
       validate: {
-        validator: (v: string) => modelValidate.email(v),
+        validator: (v: string) => validate.email(v),
         message: message.invalidEmail(),
       },
     },
