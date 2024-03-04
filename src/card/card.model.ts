@@ -1,6 +1,6 @@
 import { Schema, model, Types, MongooseError } from 'mongoose';
 import { message } from '../messages';
-import { modelValidate, catchMongooseError } from '../utils';
+import { validate, catchMongooseError } from '../utils';
 
 var schemaOptions = {
   versionKey: false,
@@ -33,7 +33,7 @@ var cardSchema = new Schema<CardSchema>(
       required: true,
       trim: true,
       validate: {
-        validator: (v: string) => modelValidate.url(v),
+        validator: (v: string) => validate.url(v),
         message: message.invalidUrl(),
       },
     },
