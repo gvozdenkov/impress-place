@@ -66,6 +66,8 @@
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.4",
+    "pino": "^8.19.0",
+    "pino-http": "^9.0.0",
     "swagger-i18n-extension": "^1.1.1",
     "swagger-ui-express": "^5.0.0"
   }
