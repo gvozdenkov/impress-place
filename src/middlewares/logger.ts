@@ -1,0 +1,22 @@
+import pino from 'pino';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+var dirname = path.dirname(fileURLToPath(import.meta.url));
+
+var streams = [
+  {
+    stream: fs.createWriteStream(`${dirname}/request.log`),
+  },
+  { level: 'error', stream: fs.createWriteStream(`${dirname}/error.log`) },
+];
+
+export var logger = pino(
+  {
+    level: 'debug',
+    base: undefined,
+    timestamp: pino.stdTimeFunctions.isoTime,
+  },
+  pino.multistream(streams),
+);
