@@ -11,12 +11,8 @@ export var schemaValidator =
     if (validationResult.error) {
       var { message, type, context } = validationResult.error.details[0];
 
-      switch (type) {
-        case 'object.unknown':
-          message = errorMessage.notAllowedField(context?.label!);
-          break;
-        default:
-          message = errorMessage.somethingWrongWithReqBody();
+      if (type === 'object.unknown') {
+        message = errorMessage.notAllowedField(context?.label!);
       }
 
       throw new ApiError(httpStatus.BAD_REQUEST, message);
