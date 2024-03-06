@@ -4,7 +4,7 @@ var maxLength = (field: string, limit: number) =>
   `The '${field}' filed should be maximum ${limit} characters`;
 var invalidUrl = (field: string) => `The '${field}' field is not valid url`;
 var invalidEmail = (field: string) => `Invalid email in the '${field}' field`;
-var existsEmail = (v: string) => `user with ${v} email already exists`;
+var existsEmail = () => `user with this email already exists`;
 var invalidInput = (field: string) =>
   `The '${field}' field must constist only of Latin and Russian charecters, hyphens and spaces`;
 var notAllowedField = (field: string) => `The '${field}' field is not allowed`;

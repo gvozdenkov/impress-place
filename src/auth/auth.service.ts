@@ -6,13 +6,8 @@ import httpStatus from 'http-status';
 
 var getUserByEmail = async (email: string) => await User.findOne({ email }).select('+password');
 
-var create = async ({ name, about, avatar, email, password }: UserSchema) => {
-  if (await User.isEmailTaken(email)) {
-    throw new ApiError(httpStatus.CONFLICT, message.existsEmail(email));
-  }
-
-  return User.create({ name, about, avatar, email, password });
-};
+var create = async ({ name, about, avatar, email, password }: UserSchema) =>
+  await User.create({ name, about, avatar, email, password });
 
 var login = async ({ email, password }: UserSchema) => {
   var user = await getUserByEmail(email);
