@@ -21,7 +21,7 @@ var getAll = catchAsync(async (req: Request, res: Response) => {
 });
 
 var getById = catchAsync(async (req: Request, res: Response) => {
-  var card = await cardService.getById(req.params.carcId);
+  var card = await cardService.getById(req.params.cardId);
 
   res.status(httpStatus.OK).json(formatResponseData(card));
 });

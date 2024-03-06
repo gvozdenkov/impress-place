@@ -1,18 +1,18 @@
 import { Router } from 'express';
-import { auth, schemaValidator } from '#middlewares';
+import { auth, paramsValidator, schemaValidator } from '#middlewares';
 import { cardController } from './card.controller';
-import { createCard } from './validation-schemas';
+import { createCard, cardIdParam } from './validation-schemas';
 
 var cardRouter = Router();
 
 cardRouter.get('/', cardController.getAll);
-cardRouter.get('/:id', cardController.getById);
+cardRouter.get('/:cardId', paramsValidator(cardIdParam), cardController.getById);
 
 cardRouter.use(auth);
 
 cardRouter.post('/', schemaValidator(createCard), cardController.create);
-cardRouter.put('/:cardId/likes', cardController.handleLike);
-cardRouter.delete('/:cardId/likes', cardController.handleLike);
-cardRouter.delete('/:cardId', cardController.deleteById);
+cardRouter.put('/:cardId/likes', paramsValidator(cardIdParam), cardController.handleLike);
+cardRouter.delete('/:cardId/likes', paramsValidator(cardIdParam), cardController.handleLike);
+cardRouter.delete('/:cardId', paramsValidator(cardIdParam), cardController.deleteById);
 
 export { cardRouter };

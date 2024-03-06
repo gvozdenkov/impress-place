@@ -15,7 +15,7 @@ var findOneAndUpdateError = (v: string) => `Can't update ${v}`;
 var custom = (v: string) => v;
 var requiedField = (field: string) => `'${field}' is required`;
 var somethingWrongWithReqBody = () => 'Something wrong with request body';
-
+var wrongParamId = (param: string) => `Incorrect '${param}' id in request params`;
 var invalidEmailOrPwd = () => 'Incorrect email or password';
 var unauthorized = () => 'You should be authorized';
 var forbiddenCardDelete = () => 'You cannot delete a card that is not yours';
@@ -38,4 +38,5 @@ export var message = {
   unauthorized,
   forbiddenCardDelete,
   somethingWrongWithReqBody,
+  wrongParamId,
 };
