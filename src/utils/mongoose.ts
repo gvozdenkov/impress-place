@@ -14,18 +14,11 @@ var mongooseErrorType: MongooseErrorType = {
 var catchError =
   (errorType: MongooseErrorType) =>
   (error: MongooseError, next: NextFunction, customMessage?: string) => {
-    console.log(error);
-    // @ts-ignore
-    var code = error.code === 11000 ? 409 : errorType[error.name] || 500;
+    var code = errorType[error.name] || 500;
     var errorMessage =
       code >= 500 && !customMessage
         ? message.internalServerError()
         : customMessage || error.message;
-
-    // @ts-ignore
-    if (error.code === 11000) {
-      errorMessage = message.existsEmail();
-    }
 
     throw new ApiError(code, errorMessage);
   };

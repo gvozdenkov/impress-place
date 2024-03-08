@@ -121,6 +121,7 @@ describe('Auth Service', () => {
     it('Should fail to create a new user, if email already exists', async () => {
       var user = randomeUser();
       await createUser({ ...user });
+      var { email } = user;
 
       await request(app)
         .post(registerPath)
@@ -130,7 +131,7 @@ describe('Auth Service', () => {
         .then((res) => {
           assert.deepStrictEqual(res.body, {
             status: 'fail',
-            message: message.existsEmail(),
+            message: message.existsEmail(email),
           });
         });
     });
