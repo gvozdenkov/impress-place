@@ -1,1 +1,0 @@
-export { docRouter } from './routes';

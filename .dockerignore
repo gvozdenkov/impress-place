@@ -1,7 +1,0 @@
-*
-# ignore all except below
-!src/
-!docs/
-!tsconfig.json
-!package.json
-!yarn.lock
