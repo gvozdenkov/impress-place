@@ -46,7 +46,7 @@ describe('Card service', () => {
           });
         });
     });
-    it.only('Loged out user should not create a card', async () => {
+    it('Loged out user should not create a card', async () => {
       var { name, link } = testCardOne;
 
       await request(app)
