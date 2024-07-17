@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://gvozdenkov.github.io/algoschool/">
-    <img src="README_static/logo.png" alt="Fibonacci Algorithmic School logo" height="200">
+    <img src="README_static/logo.svg" alt="Fibonacci Algorithmic School logo" height="200">
   </a>
   <br/><br/>
   <p align="center">Share photos of amazing places with your friends</p>
