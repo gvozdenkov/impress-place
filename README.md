@@ -1,24 +1,99 @@
-# Backend for Mesto project
+# Impress Place API
 
-## Комментарий для ревьюера
+<br />
+<div align="center">
+  <a href="https://gvozdenkov.github.io/algoschool/">
+    <img src="README_static/logo.png" alt="Fibonacci Algorithmic School logo" height="200">
+  </a>
+  <br/><br/>
+  <p align="center">Share photos of amazing places with your friends</p>
+  <br/>
+</div>
 
-Я немного упоролся по настроке проекта. Настроил минимальный CI, настроил работу с базой и
-приложением в докере. Настроил валидацию .env переменных и тесды для роутов /users которые не
-связаны с залогиненным пользователем.
+## О проекте
 
-### Для БЫСТРОГО запуска:
+Учебный REST API бэкенд для сервиса размещения фотографий `Impress Place`. Реализовал регистрацию и
+аутентификацию пользователя с помощью `jwt` токенов. Пользователь может добавить фотографию, удалить
+свою фотографию, поставить лайк любой фотографии и отредактировать свой профиль.
 
-1. Скопировать файл `.env.example` и назвать `.env`
-2. Запустить с помощью `makefile`: `make run-dev`
-3. Или запуск без `makefile`: `docker compose -f compose-dev.yaml up -d --build`
+Пошёл дальше учебного задания и добавил документацию OpenAPI, докеризовал приложение и настроил
+`pre-commit` хуки `husky`
 
-## Techstack
+- Бэкенд на `Express` / TypeScript
+- База данных `MongoDB`
+- ODM `Mongoose` для работы с базой
 
-- Typescript
-- Mongodb
-- Node.js + Express
+![swagger docs](README_static/swagger.png)
 
-## Workflow setup
+## Техники
+
+:boom: Применил подход `Contract first` в работе с API (вдохновило
+[видео Глеба Михеева](https://www.youtube.com/watch?v=-mzzT0b9K54)). Сначала создал спецификацию
+`OpenAPI` в онлайн редакторе [swagger editor](https://editor-next.swagger.io/). Файл спецификации
+[`openapi.yaml на гитхаб`](https://github.com/gvozdenkov/wish-magic/blob/main/backend/docs/openapi.yaml).
+По нему создал REST API бэкенда.
+
+Разобрался, как автоматически локализовать `OpenAPI` спецификацию с помощью
+`swagger-i18n-extension`. При сборке контейнера из одного файла спецификации создаются
+локализованные копии по языкам. После запуска в режиме разработки swagger спецификация доступна по
+адресу http://localhost:3000/api/v1/docs/en/ и http://localhost:3000/api/v1/docs/ru/
+
+:boom: Использовал версионирование API
+
+:boom: Организовал код по бизнес доменам, а не по техническим обязанностям. Например, в `/user`
+находятся все модули, относящиеся к `User` - контроллер, сервис, модель и утилиты. Таким образом
+связанные сущности находятся в одном месте и общая структура приложения выразительно говорит о то,
+про что это приложение. Так легче ориентироваться в коде
+
+:boom: Покрыл API e2e тестами с помощью `Mocha` и `Supertest`. Использовал только e2e тесты
+эндпоинтов для тестирования внешних взаимодействий. Опирался на книгу Владимира Хорикова -
+[Принципы юнит-тестирования](https://www.piter.com/collection/bestsellery-manning/product/printsipy-yunit-testirovaniya).
+Для моего случая чистого REST API выбрал стиль тестирования Проверка выходных данных. Этот стиль
+черезвычайно устойчив к рефакторингу котодов базы, потому что не завязан на внутреннюю реализацию. Я
+проверяю только то, что система выдаёт внешнему клиенту. И сопровождение тестов простое.
+
+:boom: Для тестов в режиме разработки поднимается отдельный тестовый контейнер базы
+
+:boom: Настроил проверку перед коммитами с помощью `husky`, `lint-staged` и `commitlint`. Коммит не
+создаётся, если staged файлы не проходят линтер или сообщение коммита написано не по
+[`Conventional Commits`](https://www.conventionalcommits.org/en/v1.0.0/)
+
+## Local dev with Docker
+
+```bash
+git clone git@github.com:gvozdenkov/impress-place-backend.git
+
+cd impress-place-backend
+
+cp .env.example .env
+
+docker compose -f compose.dev.yaml up --build
+# or with Makefile
+make run-dev
+
+# запуск e2e тестов
+yarn test
+```
+
+Бэкенд стартует по адерсу `http:localhost:3000/api/v1`
+
+Документация OpenAPI по адресу `http:localhost:3000/api/v1/docs/ru`
+
+Для запуска тестов `yarn test`. This will set `NODE_ENV` to `test` and run `mocha` integration tests
+in separate test container.
+
+## Планы по развитию
+
+- [ ] Перевезти проект бэкенда и фронтенда в монорепозиторий с и
+      [`pnpm workspace`](https://pnpm.io/workspaces) под управлением [`Nx`](https://nx.dev/)
+- [ ] Перевести бэкенда на [`Fastify`](https://fastify.dev/)
+- [ ] Поиграть с тем, чтобы написать бэк на чистой ноде, используя все возможностьи API ноды
+- [ ] Добавить загрузку картинок не по ссылке, а файлами
+- [ ] Прикрутить Redis для кэширования запросов к базе
+- [ ] Прикрутить авторизацию с помощью Goolge, Yandex и VK
+
+<details>
+<summary>Workflow setup details</summary>
 
 ### Eslint
 
@@ -82,32 +157,6 @@ Install deps:
 
 ```bash
 yarn add -D cz-git commitizen @commitlint/cli @commitlint/config-conventional @commitlint/format
-```
-
-## Local dev with Docker
-
-To start local dev in docker container use `makefile`:
-
-```bash
-make run-dev
-# without -d detached option to see logs in terminal
-make run-dev-d
-# and
-make stop-dev
-```
-
-This will build docker images for `mongodb` and `express` app & run containers with volumes. Local
-service started on `http:localhost:3000/api/v1`
-
-For testing run `yarn test`. This will set `NODE_ENV` to `test` and run `mocha` integration tests in
-separate test container.
-
-## Local dev without Docker
-
-I use `tsx` to run `.ts` file with ESM modules support
-
-```bash
-yarn dev
 ```
 
 ## API Documentation
@@ -185,3 +234,5 @@ Run `yarn test` to run mocha tests
 
 Run `yarn test:watch` to run mocha in watch mode to rerun tests on edits (not workin well with ts
 now...)
+
+</details>
