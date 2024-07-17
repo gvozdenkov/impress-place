@@ -1,22 +1,20 @@
 openapi: 3.1.0
 info:
-  title: Mesto
+  title: Impress Place
   x-title-i18n:
-    eng: Mesto
-    rus: Место
+    eng: Impress Place
+    rus: Impress Place
   description: >-
     Photo sharing app of the intresting places all over the world. Users can share his photos and
     like photos of other peoples.
 
-
     Some useful links:
 
-    - [Mesto backend repository](https://github.com/gvozdenkov/mesto-project-plus)
+    - [Backend repository](https://github.com/gvozdenkov/impress-place-backend)
 
-    - [Mesto frontend repository](https://github.com/gvozdenkov/mesto)
+    - [Frontend repository](https://github.com/gvozdenkov/mesto)
 
-    - [The source API definition for the
-    Mesto](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+    - [The source API definition](https://github.com/gvozdenkov/impress-place-backend/blob/main/docs/openapi.yaml)
   x-description-i18n:
     eng: >-
       Photo sharing app of the intresting places all over the world. Users can share his photos and
@@ -24,24 +22,23 @@ info:
 
       Some useful links:
 
-      - [Mesto backend repository](https://github.com/gvozdenkov/mesto-project-plus)
+      - [Backend repository](https://github.com/gvozdenkov/impress-place-backend)
 
-      - [Mesto frontend repository](https://github.com/gvozdenkov/mesto)
+      - [Frontend repository](https://github.com/gvozdenkov/mesto)
 
-      - [The source API definition for the
-      Mesto](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+      - [The source API definition](https://github.com/gvozdenkov/impress-place-backend/blob/main/docs/openapi.yaml)
     rus: >-
       Приложение для обмена фотографиями интересных мест по всему миру. Пользователи могут делиться
       его фотографиями и ставить лайки фотографиям других людей.
 
       Полезные ссылки:
 
-      - [Репозиторий бэкенда](https://github.com/gvozdenkov/mesto-project-plus)
+      - [Репозиторий бэкенда](https://github.com/gvozdenkov/impress-place-backend)
 
       - [Репозиторий фронтенда](https://github.com/gvozdenkov/mesto)
 
       - [Исходник OpenApi
-      API](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+      API](https://github.com/gvozdenkov/impress-place-backend/blob/main/docs/openapi.yaml)
   contact:
     email: gvozdenkov@gmail.com
   license:
@@ -60,8 +57,15 @@ servers:
 tags:
   - name: card
     description: Operations about card
+    x-description-i18n:
+      eng: Operations about Card
+      rus: Операции с Card
+
   - name: user
     description: Operations about user
+    x-description-i18n:
+      eng: Operations about User
+      rus: Операции с User
 
 paths:
   /cards:
@@ -69,6 +73,9 @@ paths:
       tags:
         - card
       summary: Get all cards
+      x-summary-i18n:
+        eng: Get all cards
+        rus: Получить все Cards
       operationId: getCards
       responses:
         '200':
