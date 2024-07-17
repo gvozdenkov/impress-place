@@ -1,14 +1,7 @@
-run-dev:
-	docker compose -f compose-dev.yaml up -d --build
+composeDev = compose.dev.yaml
 
-run-dev-d:
-	docker compose -f compose-dev.yaml up --build
+run-dev:
+	docker compose -f $(composeDev) up --build
 
 stop-dev:
-	docker compose -f compose-dev.yaml down
-
-run-prod:
-	docker compose -f compose-prod.yaml up -d --build
-
-stop-prod:
-	docker compose -f compose-prod.yaml down
+	docker compose -f $(composeDev) down

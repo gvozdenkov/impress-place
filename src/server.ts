@@ -8,5 +8,6 @@ var server = http.createServer(app);
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Server running on port ${PORT}, http://localhost:${PORT}${BASE_PATH}`);
+  console.log(`\nServer running on port ${PORT}, http://localhost:${PORT}${BASE_PATH}/v1
+    \nSwagger OpenAPI specification on http://localhost:${PORT}${BASE_PATH}/v1/docs/ru`);
 });

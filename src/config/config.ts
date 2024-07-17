@@ -17,9 +17,9 @@ var envSchema = joi
     JWT_ACCESS_TOKEN_EXPIRESIN: joi.number().required().description('In seconds'),
     JWT_REFRESH_TOKEN_EXPIRESIN: joi.number().required().description('In seconds'),
     MONGODB_URI: joi.string().required().description('Mongo DB url'),
-    DB_NAME: joi.string().required().default('mesto-db'),
+    DB_NAME: joi.string().required().default('impress-place-db'),
     MONGODB_URI_TEST: joi.string().required().description('Mongo test DB url'),
-    DB_NAME_TEST: joi.string().default('mesto-db-test'),
+    DB_NAME_TEST: joi.string().default('impress-place-db-test'),
   })
   .unknown();
 
